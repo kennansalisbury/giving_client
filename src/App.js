@@ -56,8 +56,6 @@ function App() {
   }
 
   if(user) {
-    console.log('there is a user')
-    // return <Redirect to="/Home"/>
     return (
       <Router>
         <header>

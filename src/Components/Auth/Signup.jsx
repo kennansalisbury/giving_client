@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import {Redirect} from 'react-router-dom'
 
 const Signup = props => {
 
@@ -65,7 +64,7 @@ const Signup = props => {
     }
 
     let verifyOrg
-    let orgBeingVerified
+    // let orgBeingVerified
     const verifyOrganization = (e) => {
         e.preventDefault()
         console.log(`STUB: You entered ${organizationid} for the organization id. Will verify that here.`)
