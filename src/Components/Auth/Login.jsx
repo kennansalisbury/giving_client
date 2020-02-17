@@ -28,7 +28,6 @@ const Login = props => {
         .then(response => {
             response.json()
             .then(result => {
-                console.log('Response', response, 'Result', result)
                 //if response.ok = true, updateUser(result.token)
                 if(response.ok) {
                     props.updateUser(result.token)
@@ -43,16 +42,10 @@ const Login = props => {
         })
     }
 
-    //if there is a user, redirect to home
-    if(props.user) {
-        // return <Redirect to="/Home"/>
-        return (
-            <h1>User logged in: {props.user.firstname} {props.user.lastname}, {props.user.email}</h1>
-        )
-    }
     
     return (
         <div>
+            <h1>Log in</h1>
            <form onSubmit={handleSubmit}>
             <input type="text" name="email" onChange={e => setEmail(e.currentTarget.value)}/>
             <input type="text" name="password" onChange={e => setPassword(e.currentTarget.value)}/>
