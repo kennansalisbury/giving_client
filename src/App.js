@@ -1,15 +1,19 @@
 import React, {useState, useEffect} from 'react'
 import jwtDecode from 'jwt-decode'
+import {BrowserRouter as Router} from 'react-router-dom'
 
 import './App.css';
 
 import Login from './Components/Auth/Login'
 import Signup from './Components/Auth/Signup'
+import GiverContent from './Components/Giver/GiverContent'
+import Navbar from './Components/Navbar'
+
 
 
 function App() {
 
-  // Hooks for storing current user token
+  // Hooks 
   let [user, setUser] = useState(null)
   
   //Check for token on load
@@ -51,30 +55,31 @@ function App() {
     }
   }
 
-  const handleLogout = (e) => {
-    e.preventDefault()
-    localStorage.removeItem('userToken')
-    updateUser(null)
-
-}
-
-   //if there is a user, redirect to home
-   if(user) {
+  if(user) {
+    console.log('there is a user')
     // return <Redirect to="/Home"/>
     return (
-        <div>
-            <h1>User logged in: {user.firstname} {user.lastname}, {user.email}</h1>
-            <button onClick={handleLogout}>Logout</button>
-        </div>
+      <Router>
+        <header>
+          <Navbar user={user} updateUser={updateUser} />
+        </header>
+        <main>
+          <GiverContent user={user} updateUser={updateUser}/>
+        </main>
+        {/* <footer>
+          <Footer />
+        </footer> */}
+      </Router>
     )
-}
+  }
 
   return (
     <div className="App">
-      <Login user={user} updateUser={updateUser} />
-      <Signup user={user} updateUser={updateUser} />
+        <Login user={user} updateUser={updateUser} />
+        <Signup user={user} updateUser={updateUser} />
     </div>
   );
+
 }
 
 export default App;
