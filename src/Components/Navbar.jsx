@@ -1,7 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import {
+    Navbar as RSNavbar,
+    NavbarBrand,
+    Nav,
+    NavLink,
+    NavItem
+  } from 'reactstrap'
 
 const Navbar = props => {
+  
+    let [profilePhoto, setProfilePhoto] = useState(<FontAwesomeIcon icon={faUserCircle}/>)
 
     const handleLogout = (e) => {
         e.preventDefault()
@@ -9,11 +20,27 @@ const Navbar = props => {
         props.updateUser(null)
       }
 
+    let homeIcon = <FontAwesomeIcon icon={faHome} color="black" />
+    
+    if(props.user.profilePhoto) {
+        setProfilePhoto(<img className="profileIcon" src={props.user.profilePhoto} alt="profile-icon"/>)
+    }
+
+    let profileIcon = profilePhoto
+
     return (
         <div>
-            <p>Hi {props.user.firstname}</p>
-            <Link to="/">Home</Link>
-            <button onClick={handleLogout}>Logout</button>
+            <RSNavbar color="light" light expand="md">
+                <NavbarBrand href="/">{homeIcon}</NavbarBrand>
+                <Nav className="ml-auto" navbar>
+                    <NavItem onClick={handleLogout}>
+                        <NavLink href="#">Logout</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink href="#">{profileIcon}</NavLink>
+                    </NavItem>
+                </Nav>
+            </RSNavbar>
         </div>
     )
 }

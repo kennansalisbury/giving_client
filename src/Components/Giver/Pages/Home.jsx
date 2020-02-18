@@ -9,7 +9,6 @@ const Home = props => {
 
     return (
         <div>
-            HOME PAGE
             {allPrograms}
         </div>
     )
