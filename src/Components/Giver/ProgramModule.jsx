@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {Card, Col, CardText, CardBody, CardTitle, Button} from 'reactstrap'
 
 const ProgramModule = props => {
     
@@ -35,14 +36,17 @@ const ProgramModule = props => {
   
 
     return (
-        <div>
-            <h1>{props.program.name}</h1>
-            <p>{props.program.description}</p>
-            <p>Ends: {props.program.endDate} </p>
-            <p>Goal: {totalGoal}</p>
-            <p>Total Items Purchased To Date: {totalPurchased}</p>
-            {/* show total current number of items purchased and total goal */}
-        </div>
+        <Col xs="12" sm="5">
+            <Card>
+                <CardBody>
+                    <CardTitle tag="h1">{props.program.name}</CardTitle>
+                    <CardText>{props.program.description}</CardText>
+                    <CardText tag="h4">Ends: {props.program.endDate} </CardText>
+                    <CardText>Goal: {totalGoal}</CardText>
+                    <CardText>Total Items Purchased To Date: {totalPurchased}</CardText>
+                </CardBody>
+            </Card>
+        </Col>
     )
 }
 

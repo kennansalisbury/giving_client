@@ -1,5 +1,6 @@
 import React from 'react'
 import Program from '../ProgramModule'
+import {Container, Row} from 'reactstrap'
 
 const Home = props => {
 
@@ -8,9 +9,12 @@ const Home = props => {
     })
 
     return (
-        <div>
-            {allPrograms}
-        </div>
+        <Container>
+            <Row>
+                {allPrograms}
+            </Row>
+        </Container>
+
     )
 }
 
