@@ -13,11 +13,12 @@ const GiverContent = props => {
         fetchData()
     }, [])
 
+
     //fetch data, and set state
     const fetchData = () => {
         fetch(`${process.env.REACT_APP_SERVER_URL}/programs/${props.user.id}`)
-        .then(response => {response.json()
-            .then(data => {
+        .then(response => {
+            response.json().then(data => {
                 if(response.ok) {
                     setAllPrograms(data[0].programs)
                     setGiverItems(data[1].giverItems)
@@ -53,7 +54,10 @@ const GiverContent = props => {
         return totalCounter
     }
 
-
+    console.log('About to render', allPrograms)
+    if (!allPrograms || !allPrograms.length) {
+        return <div>Loading...</div>
+    }
 
     return (
         <div>

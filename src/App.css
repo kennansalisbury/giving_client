@@ -11,3 +11,9 @@
   text-decoration: none;
   color:black;
 }
+
+.number-select {
+  width: 2em;
+  height: 1em;
+  margin-right: 5px;
+}
