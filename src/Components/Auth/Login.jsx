@@ -1,6 +1,26 @@
 import React, {useState} from 'react'
+import TextField from '@material-ui/core/TextField'
+import FormControl from '@material-ui/core/FormControl'
+import Button from '@material-ui/core/Button'
+import {makeStyles} from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import Grid from '@material-ui/core/Grid'
+import CardContent from '@material-ui/core/CardContent'
+
+const useStyles = makeStyles(theme => ({
+    root: {
+      '& .MuiTextField-root': {
+        margin: theme.spacing(1),
+        width: 200,
+      },
+    },
+  }));
+
 
 const Login = props => {
+    
+    const classes = useStyles();
+
 
     //set hooks for login form
     let [email, setEmail] = useState('')
@@ -40,18 +60,23 @@ const Login = props => {
             console.log(err)
         })
     }
-
     
     return (
-        <div>
-            <h1>Log in</h1>
-           <form onSubmit={handleSubmit}>
-            <input type="text" name="email" onChange={e => setEmail(e.currentTarget.value)}/>
-            <input type="text" name="password" onChange={e => setPassword(e.currentTarget.value)}/>
-            <button type="submit">Submit</button>
-           </form>
-           <p>{message}</p>
-        </div>
+            <Grid item xs={12} sm={6}>
+                <Card>
+                    <CardContent align="center">
+                        <h5>Login</h5>
+                        <form className={classes.root} onSubmit={handleSubmit}>
+                            <FormControl>
+                                <TextField required  label="Email"  size="small" onChange={e => setEmail(e.currentTarget.value)}/>
+                                <TextField required  label="Password" size="small" onChange={e => setPassword(e.currentTarget.value)}/>
+                                <Button type="submit" variant="contained" size="small">Submit</Button>
+                            </FormControl>
+                        </form>
+                        <p>{message}</p>
+                    </CardContent>
+                </Card>
+            </Grid>
     )
 }
 

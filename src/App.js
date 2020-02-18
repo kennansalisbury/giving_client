@@ -3,6 +3,7 @@ import jwtDecode from 'jwt-decode'
 import {BrowserRouter as Router} from 'react-router-dom'
 
 import './App.css';
+import Grid from '@material-ui/core/Grid'
 
 import Login from './Components/Auth/Login'
 import Signup from './Components/Auth/Signup'
@@ -62,21 +63,33 @@ function App() {
           <Navbar user={user} updateUser={updateUser} />
         </header>
         <main>
-          <GiverContent user={user} updateUser={updateUser}/>
+          <GiverContent 
+            user={user} 
+            updateUser={updateUser} 
+          />
         </main>
         {/* <footer>
           <Footer />
         </footer> */}
       </Router>
     )
-  }
+  } else {
+
+ 
 
   return (
-    <div className="App">
+    <Grid 
+      container 
+      direction ="column"
+      justify = "center"
+      alignItems = "center"
+      spacing = {4}
+    >
         <Login user={user} updateUser={updateUser} />
         <Signup user={user} updateUser={updateUser} />
-    </div>
-  );
+    </Grid>
+  )
+}
 
 }
 
