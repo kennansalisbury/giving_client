@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
+import {PayPalButton} from 'react-paypal-button-v2'
 
 import ProgramItem from '../ProgramItem'
 import ConfirmCart from '../ConfirmCart'
@@ -18,7 +19,6 @@ const Details = props => {
     let [message, setMessage] = useState('')
     let [itemsInCart, setItemsInCart] = useState([])
     let [showCart, setShowCart] = useState(false)
-
     let [counts, setCounts] = useState({})
 
     //on load, grab id from params and set selected program state to the program that was clicked on
@@ -71,7 +71,7 @@ const Details = props => {
     console.log('itemsInCart =', itemsInCart)
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        // e.preventDefault()
         //create array of data objects to post from itemsInCart and counts states
         let data = itemsInCart.map((item, i) => ({ 
                 num_purchased: counts[item.id],
@@ -125,11 +125,28 @@ const Details = props => {
            <Container>
                     <h1>{selectedProgram.name}</h1>
                     <h3>Your Cart</h3>
-                    <form onSubmit={handleSubmit}>
+                    <form>
                         {itemsList}
                         <ConfirmCart totalCost={totalCost}/>
                         <Button variant="contained" onClick={e => updateCart(e)}>Update My Cart</Button>
-                        <Button variant="contained" type="submit">Make Purchase</Button>
+                        {/* <Button variant="contained" type="submit">Make Purchase</Button> */}
+                        {message}
+                        <PayPalButton
+                            amount={totalCost}
+                            onSuccess={(details) => {
+                                console.log(details)
+                                setMessage(`Success! Your Order Id is: ${details.id}`)
+                                handleSubmit()
+                            }}
+                            catchError={err => {
+                                console.log(err)
+                                setMessage(`Payment declined, or there was an error with your transaction method. Try again.`)
+                            }}
+                            onError={err => {
+                                setMessage(`Transaction Error. Try again.`)
+                            }}
+                            style={{layout: "vertical", tagline: false}}
+                        />
                     </form>
             </Container>
     
