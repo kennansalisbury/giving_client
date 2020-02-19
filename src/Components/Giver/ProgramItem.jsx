@@ -2,25 +2,39 @@ import React, {useState, useEffect} from 'react'
 
 const ProgramItem = props => {
     
-    let [cost, setCost] = useState(0)
-    let [totalNum, setTotalNum] = useState(0)
+    // let [cost, setCost] = useState(0)
+    // let [totalNum, setTotalNum] = useState(0)
 
     const handleChange = (e) => {
-        console.log('setting cost for this item to', props.item.cost * e.currentTarget.value)
-        setCost(props.item.cost * e.currentTarget.value)
-        setTotalNum(e.currentTarget.value)
+        props.counts[props.item.id] = parseInt(e.currentTarget.value)
+        console.log('🌷🌷🌷🌷', props.counts)
+        props.setCounts(props.counts)
+
+        // console.log('setting cost for this item to', props.item.cost * e.currentTarget.value)
+        // setCost(props.item.cost * e.currentTarget.value)
+        // setTotalNum(e.currentTarget.value)
+        // props.setToPurchase([...props.toPurchase, {
+        //     name: props.item.name,
+        //     num_purchased: totalNum,
+        //     dollars_spent: cost,
+        //     userId: props.userId,
+        //     programItemId: props.item.programItemId
+        // }])
     }
 
-    useEffect(() => {
-        props.getTotalCost(cost)
-        props.pushToPurchase({
-            name: props.item.name,
-            num_purchased: totalNum,
-            dollars_spent: cost,
-            userId: props.userId,
-            programItemId: props.item.programItemId
-        })
-    }, [props.readyToTotal])
+    // useEffect(() => {
+    //     props.totalEverything(cost)
+    // }, [props.readyToTotal])
+    if(props.cartShowing) {
+        return (
+            <div>
+            <label>
+                <input className="number-select" type="number" min="0" max="100" value={props.counts[props.item.id]} disabled/>
+                {props.item.name} ${props.item.cost}
+            </label>
+        </div>
+        )
+    }
 
     return (
         <div>

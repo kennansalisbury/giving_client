@@ -2,33 +2,74 @@ import React, {useState, useEffect} from 'react'
 import {useParams} from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
 
 import ProgramItem from '../ProgramItem'
 import ConfirmCart from '../ConfirmCart'
 
 
+
 const Details = props => {
     
     let {id} = useParams()
-    console.log(id)
+
     let [selectedProgram, setSelectedProgram] = useState(null)
-    let [readyToTotal, setReadyToTotal] = useState(false)
     let [totalCost, setTotalCost] = useState(0)
     let [message, setMessage] = useState('')
-    let [toPurchase, setToPurchase] = useState([])
+    let [itemsInCart, setItemsInCart] = useState([])
+    let [showCart, setShowCart] = useState(false)
 
+    let [counts, setCounts] = useState({})
 
+    //on load, grab id from params and set selected program state to the program that was clicked on
     useEffect(() => {
-        console.log('🚣‍♂️',props.allPrograms,)
         setSelectedProgram(props.allPrograms.find(program => program.id == id))
-    }, [])
+    }, [props.allPrograms, id])
+
+    //when selectedProgram changes (i.e. loads), create temporary object to keep track of item counts 
+    const initCounts = () => {
+        if(selectedProgram) {
+            let temp = {}
+            selectedProgram.programItems.forEach(item => {
+                temp[item.id] = 0
+            })
+            setCounts(temp)
+        }
+    }
+    
+    useEffect(() => {
+        initCounts()
+    }, [selectedProgram])
 
 
-    const handleFirstClick = (e) => {
+    const addToCart = (e) => {
         e.preventDefault()
-        setReadyToTotal(true)        
+        let total = 0
+        selectedProgram.programItems.forEach(item => {
+            total += (counts[item.id] * item.cost)
+        })
+        console.log('set total cost to:', total)
+        if(total === 0) {
+            setMessage('You have not added anything to your cart yet.')
+        } else {
+            setTotalCost(total) 
+            let cart = selectedProgram.programItems.filter(item => counts[item.id] > 0)  
+            
+            setItemsInCart(cart)
+            console.log('CART ITEMS:', itemsInCart )
+            setShowCart(true) 
+        }
     }
 
+    const updateCart = (e) => {
+        e.preventDefault()
+        setTotalCost(0)
+        setItemsInCart([])
+        setShowCart(false)
+        initCounts()
+    }
+
+    console.log('itemsInCart =', itemsInCart)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -38,63 +79,57 @@ const Details = props => {
         //post to giveritems post route
     }
 
-    const handleChange = () => {
-        //set state
+    console.log('about to render selected program', selectedProgram)
+    console.log('🌷🌷🌷🌷', counts)
+    
+    
+    if(!selectedProgram) {
+        return <div>Loading...</div>
+    }
+
+    let itemsList = selectedProgram.programItems.map((item, i) => {
         
-    }
+        // return <p>{item.name}</p>
 
-    const getTotalCost = (totalItemCost) => {
-        if(readyToTotal) {
-            setTotalCost(totalCost += totalItemCost) 
-            if(totalCost === 0) {
-                setMessage('You have not added anything to your cart.')
-                setReadyToTotal(false)
-            }
-        } 
-    }
-    
-    const pushToPurchase = (obj) => {
-        if(readyToTotal && obj.num_purchased != 0) {
-            setToPurchase(toPurchase.push(obj))
-            console.log('toPurchase =', toPurchase)
-        }
-    }
+        return <ProgramItem key={i} cartShowing={showCart} item={item} counts={counts} setCounts={setCounts} userId={props.user.id} />
+            
+    })
 
-        if(totalCost > 0) {
-            return <ConfirmCart totalCost={totalCost} toPurchase={toPurchase} />
-        }
-    
-        if(selectedProgram) {
-
-            let itemsList = selectedProgram.programItems.map((item, i) => {
-                
-                // return <p>{item.name}</p>
-    
-                return <ProgramItem item={item} getTotalCost={getTotalCost} readyToTotal={readyToTotal} userId={props.user.id} pushToPurchase={pushToPurchase} />
-                    
-            })
-
+    if(showCart) {
         return (
-            <Container>
-                <h1>{selectedProgram.name}</h1>
-                <form onSubmit={handleSubmit}>
-                    <h3>Items Needed</h3>
+           
+           <Container>
+                    <h1>{selectedProgram.name}</h1>
+                    <h3>Your Cart</h3>
                     {itemsList}
-                    <Button variant="contained" onClick={e => {
-                        handleFirstClick(e) 
-                        }}>Total My Cart</Button>
-                    {message}
-                </form>
-
-
+                    <ConfirmCart totalCost={totalCost}/>
+                    <Button variant="contained" onClick={e => updateCart(e)}>Update My Cart</Button>
+                    <Button variant="contained" type="submit">Make Purchase</Button>
             </Container>
+    
             
         )
+
     }
 
     return (
-        <div>Loading...</div>
+        <Container>
+            <h1>{selectedProgram.name}</h1>
+            <form onSubmit={handleSubmit}>
+                <h3>Items Needed</h3>
+                {itemsList}
+                <Button variant="contained" onClick={e => addToCart(e)}>Add To My Cart</Button>
+                {message}
+
+            </form>
+
+            {/* {totalCost > 0 ? <p>Total Cost: ${totalCost} </p> : <p>You have no items in your cart yet</p>} */}
+
+        </Container>
+
+        
     )
 }
+
 
 export default Details
