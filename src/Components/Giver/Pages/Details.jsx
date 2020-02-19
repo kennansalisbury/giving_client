@@ -101,24 +101,6 @@ const Details = props => {
                 console.log(err)
             })
         })
-
-        //fetch to giveritems post route
-        // fetch(`${process.env.REACT_APP_SERVER_URL}/items/giver`, {
-        //     method: 'POST',
-        //     body: JSON.stringify(data),
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //         // 'Authorization': `Bearer ${token}`
-        //     }
-        // })
-        // .then(response => response.json()
-        //     .then(result => {
-        //         console.log('🌈🌈🌈DATA RETURNED 🌈🌈🌈', result)
-        //     })
-        // )
-        // .catch(err => {
-        //     console.log(err)
-        // })
     }
 
     console.log('about to render selected program', selectedProgram)
