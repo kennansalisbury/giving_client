@@ -54,7 +54,6 @@ const Details = props => {
         } else {
             setTotalCost(total) 
             let cart = selectedProgram.programItems.filter(item => counts[item.id] > 0)  
-            
             setItemsInCart(cart)
             console.log('CART ITEMS:', itemsInCart )
             setShowCart(true) 
@@ -73,10 +72,53 @@ const Details = props => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        //get current state
-        
-        
-        //post to giveritems post route
+        //create array of data objects to post from itemsInCart and counts states
+        let data = itemsInCart.map((item, i) => ({ 
+                num_purchased: counts[item.id],
+                dollars_spent: counts[item.id] * item.cost,
+                userId: props.user.id,
+                programItemId: item.id
+            })
+        )
+
+        data.forEach(item => {
+            console.log('DATA SENT 🌈🌈🌈', JSON.stringify(item))
+            //fetch to giveritems post route
+            fetch(`${process.env.REACT_APP_SERVER_URL}/items/giver`, {
+                method: 'POST',
+                body: JSON.stringify(item),
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(response => response.json()
+                .then(result => {
+                    console.log('🌈🌈🌈DATA RETURNED 🌈🌈🌈', result)
+                })
+            )
+            .catch(err => {
+                console.log(err)
+            })
+        })
+
+        //fetch to giveritems post route
+        // fetch(`${process.env.REACT_APP_SERVER_URL}/items/giver`, {
+        //     method: 'POST',
+        //     body: JSON.stringify(data),
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //         // 'Authorization': `Bearer ${token}`
+        //     }
+        // })
+        // .then(response => response.json()
+        //     .then(result => {
+        //         console.log('🌈🌈🌈DATA RETURNED 🌈🌈🌈', result)
+        //     })
+        // )
+        // .catch(err => {
+        //     console.log(err)
+        // })
     }
 
     console.log('about to render selected program', selectedProgram)
@@ -101,10 +143,12 @@ const Details = props => {
            <Container>
                     <h1>{selectedProgram.name}</h1>
                     <h3>Your Cart</h3>
-                    {itemsList}
-                    <ConfirmCart totalCost={totalCost}/>
-                    <Button variant="contained" onClick={e => updateCart(e)}>Update My Cart</Button>
-                    <Button variant="contained" type="submit">Make Purchase</Button>
+                    <form onSubmit={handleSubmit}>
+                        {itemsList}
+                        <ConfirmCart totalCost={totalCost}/>
+                        <Button variant="contained" onClick={e => updateCart(e)}>Update My Cart</Button>
+                        <Button variant="contained" type="submit">Make Purchase</Button>
+                    </form>
             </Container>
     
             
@@ -115,16 +159,12 @@ const Details = props => {
     return (
         <Container>
             <h1>{selectedProgram.name}</h1>
-            <form onSubmit={handleSubmit}>
+            <form>
                 <h3>Items Needed</h3>
                 {itemsList}
                 <Button variant="contained" onClick={e => addToCart(e)}>Add To My Cart</Button>
                 {message}
-
             </form>
-
-            {/* {totalCost > 0 ? <p>Total Cost: ${totalCost} </p> : <p>You have no items in your cart yet</p>} */}
-
         </Container>
 
         
