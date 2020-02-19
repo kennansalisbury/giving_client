@@ -15,7 +15,7 @@ const ProgramModule = props => {
         let purchased = props.findTotalPurchased(props.program.programItems)
         setTotalGoal(goal)
         setTotalPurchased(purchased)
-    }, [])
+    }, [props])
     
     return (
         <Grid item xs={12} sm={6}>

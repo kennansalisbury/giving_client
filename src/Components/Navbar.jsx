@@ -2,14 +2,8 @@ import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons'
-import{Button, Drawer, AppBar, Toolbar, makeStyles, List, ListItem, ListItemText, Divider, IconButton, Menu, MenuItem} from '@material-ui/core'
-// import {
-//     Navbar as RSNavbar,
-//     NavbarBrand,
-//     Nav,
-//     NavLink,
-//     NavItem
-//   } from 'reactstrap'
+import{Button, Drawer, AppBar, Toolbar, makeStyles, List, ListItem, ListItemText, IconButton, Menu, MenuItem} from '@material-ui/core'
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -89,11 +83,11 @@ const Navbar = props => {
 
     return (
         <div>
-            <AppBar position="static" color="white">
+            <AppBar position="static" color="transparent">
                 
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <Button onClick={toggleDrawer(true)}>{homeIcon}</Button>
+                    <IconButton onClick={toggleDrawer(true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                        {homeIcon}
                         <Drawer open={drawerState} onClose={toggleDrawer(false)}>
                             {sideList()}
                         </Drawer>

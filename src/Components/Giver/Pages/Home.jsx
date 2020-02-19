@@ -4,7 +4,6 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 
 const Home = props => {
-    console.log(props.allPrograms)
 
     let allPrograms = props.allPrograms.map((program, i) => {
         return <Program 

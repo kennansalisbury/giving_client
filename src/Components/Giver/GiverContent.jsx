@@ -53,8 +53,7 @@ const GiverContent = props => {
         })
         return totalCounter
     }
-
-    console.log('About to render', allPrograms)
+    
     if (!allPrograms || !allPrograms.length) {
         return <div>Loading...</div>
     }

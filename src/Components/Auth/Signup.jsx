@@ -11,6 +11,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import {makeStyles} from '@material-ui/core/styles'
 import FormGroup from '@material-ui/core/FormGroup'
+// import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -33,23 +34,20 @@ const Signup = props => {
     let [lastname, setLastname] = useState('')
     let [email, setEmail] = useState('')
     let [password, setPassword] = useState('')
-    let [profilePhoto, setProfilePhoto] = useState('')
     let [isDonor, setIsDonor] = useState('')
     let [organizationid, setOrganizationid] = useState(null)
     let [message, setMessage] = useState('')
-
     let [donorOrOrgSelected, setDonorOrOrgSelected] = useState('')
 
     const handleSubmit = e => {
         e.preventDefault()
-        
+
         //set data to input data
         let data = {
             firstname,
             lastname,
             email,
             password,
-            profilePhoto,
             isDonor,
             organizationid
         }
@@ -120,11 +118,11 @@ const Signup = props => {
                     <h5 align="center">Sign up</h5>
                     <p>{message}</p>
                     <form className={classes.root} onSubmit={handleSubmit}>
-                        <FormGroup fullWidth>
+                        <FormGroup>
                             {/* <FormLabel>first name</FormLabel> */}
-                            <TextField fullWidth required label="firstname" onChange={e => setFirstname(e.currentTarget.value)}/>
+                            <TextField required label="firstname" onChange={e => setFirstname(e.currentTarget.value)}/>
                             {/* <FormLabel>last name</FormLabel> */}
-                            <TextField fullWidth label="lastname" onChange={e => setLastname(e.currentTarget.value)}/>
+                            <TextField label="lastname" onChange={e => setLastname(e.currentTarget.value)}/>
                         {/* </FormGroup>
                         <FormGroup> */}
                             {/* <FormLabel>email</FormLabel> */}
