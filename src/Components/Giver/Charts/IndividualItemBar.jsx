@@ -2,15 +2,22 @@ import React from 'react'
 import {BarChart, ComposedChart, XAxis, YAxis, Tooltip, Bar, ResponsiveContainer, Legend, CartesianGrid, Area, Line} from 'recharts'
 
 const IndividualItemBar = props => {
-    const data = [
-        {
-          name: 'Item', num: 50, goal: 100
-        }
-      ];
+    let data
+    let goal = ''
+    let number = ''
 
+      if(props.data) {
+          data = props.data
+      }
 
+      if(data.length) {
+        number = data[0].num
+        goal = (data[0].togoal + data[0].num)
+        console.log('number', number, 'goal', goal)
+      }
+      
     return (
-
+        <div>
         <ComposedChart
             layout="vertical"
             width={100}
@@ -27,10 +34,11 @@ const IndividualItemBar = props => {
             {/* <Legend /> */}
             
             <Bar dataKey="num" stackId="a" barSize={20} fill="#413ea0" />
-            <Bar dataKey="goal" stackId="a" barSize={10} fill="#e2e1f6" />
+            <Bar dataKey="togoal" stackId="a" barSize={20} fill="#e2e1f6" />
     
         </ComposedChart>
-
+        <p>{number}/{goal}</p>
+        </div>
     );
   }
 

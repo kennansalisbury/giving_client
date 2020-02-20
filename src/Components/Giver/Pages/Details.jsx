@@ -22,7 +22,7 @@ const Details = props => {
     let [loopCounter, setLoopCounter] = useState(0)
     let [orderId, setOrderId] = useState()
     let [itemsPurchased, setItemsPurchased] = useState([])
-    let [tempCountTotal, setTempCountTotal] = useState([])
+ 
     let [dataForChart, setDataForChart] = useState([{
         "name": "Items Needed",
         "value": (props.totalGoal - props.totalPurchased)
@@ -63,7 +63,6 @@ const Details = props => {
             }
         ]
         setDataForChart(data)
-        console.log('CHART DATA', dataForChart)
     }
 
     const tempTotalCounts = (counts) => {
@@ -71,10 +70,7 @@ const Details = props => {
         props.program.programItems.forEach(item => {
             total += counts[item.id]
         }) 
-        console.log('temp total counts:', total)
-        setTempCountTotal(total)
         formatDataForChart(total)
-
     }
 
     //total cost for "cart" and set the items in cart for purchasing

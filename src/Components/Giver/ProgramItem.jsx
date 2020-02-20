@@ -6,28 +6,59 @@ import { Grid } from '@material-ui/core'
 const ProgramItem = props => {
     console.log(props)
 
+
+    let [totalItemPurchased, setTotalItemPurchased] = useState(0)
+    let [tempCounts, setTempCounts] = useState(0)
+    let [dataForChart, setDataForChart] = useState([])
+
     const getTotalItemPurchased = () => {
         let total=0
         props.item.giverItems.forEach(item => total += item.num_purchased)
         setTotalItemPurchased(total)
     }
 
-    let [totalItemPurchased, setTotalItemPurchased] = useState(0)
-    let [tempCounts, setTempCounts] = useState(0)
-
     useEffect(() => {
-        getTotalItemPurchased()
-    })
+        formatDataForChart()
+    }, [])
+
+    const formatDataForChart = (tempCount) => {
+        let total=0
+        props.item.giverItems.forEach(item => total += item.num_purchased)
+        setTotalItemPurchased(total)
+        
+        let currentNum
+        if(tempCount){
+            currentNum = total += tempCount
+        }
+        else {
+            currentNum= total
+        }
+        console.log('CURRENT NUM', currentNum)
+
+        let data = [
+            {
+                name: 'Item', 
+                num: currentNum,
+                togoal: props.item.goal_num - currentNum
+            }
+      ]
+        setDataForChart(data)
+ 
+    }
+
+    // console.log('CHART DATA', dataForChart)
 
     const handleChange = (e) => {
         //set counts to the current values of the inputs
-        props.counts[props.item.id] = parseInt(e.currentTarget.value)
+        let tempCount = (e.target.value ? parseInt(e.currentTarget.value) : 0)
+
+        props.counts[props.item.id] = tempCount
         props.setCounts(props.counts)
         console.log('COUNTS',props.counts)
-        let total = 0
-
         props.tempTotalCounts(props.counts)
-        // console.log('TEMP COUNTS TOTAL', total)
+        
+
+        formatDataForChart(tempCount)
     }
 
     if(props.cartShowing) {
@@ -56,7 +87,7 @@ const ProgramItem = props => {
             </Grid>
             <Grid item xs={1}></Grid>
             <Grid item xs={5} sm={5}>
-                <IndividualItemBar />
+                <IndividualItemBar data={dataForChart} />
             </Grid>
         </Grid>
     
