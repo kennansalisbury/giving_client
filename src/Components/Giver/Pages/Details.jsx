@@ -4,6 +4,8 @@ import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import {PayPalButton} from 'react-paypal-button-v2'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 
 import ProgramItem from '../ProgramItem'
@@ -22,6 +24,7 @@ const Details = props => {
     let [loopCounter, setLoopCounter] = useState(0)
     let [orderId, setOrderId] = useState()
     let [itemsPurchased, setItemsPurchased] = useState([])
+    let [totalGivers, setTotalGivers] = useState(0)
  
     let [dataForChart, setDataForChart] = useState([{
         "name": "Items Needed",
@@ -48,6 +51,7 @@ const Details = props => {
     useEffect(() => {
         if(props.program) {
             initCounts()
+            setTotalGivers(findTotalGivers())
         }
     }, [props.program])
 
@@ -209,6 +213,34 @@ const Details = props => {
         return <Redirect to="/login"/>
     }
 
+    const findTotalGivers = () => {
+        if(props.program) {
+            let temp = {}
+            props.program.programItems.forEach(item => {
+                item.giverItems.forEach(gi => {
+                
+                    if(!temp[gi.usd]) {
+                        temp[gi.usd] = 1
+                    } else {
+                        temp[gi.usd] = temp[gi.usd] += 1
+                    }
+                    
+                }) 
+            })
+           return Object.keys(temp).reduce((total, key) => parseInt(total) + temp[key], 0)
+        }
+    }
+
+    // const setTotalGiverIcons = () => {
+    //     let totalGiverIcons = 0
+    //     for (let i = 0; i < totalGivers; i++) {
+    //         <FontAwesomeIcon icon={faUser} />
+    //     }
+    // }
+
+    let totalGiverIcons = setTotalGiverIcons()
+    
+
     return (
         <Container>
             <h1>{props.program.name}</h1>
@@ -231,6 +263,9 @@ const Details = props => {
                     <h3>Progress to Total Program Goal</h3>
                     {/* <ProgramDonut tempCountTotal={tempCountTotal} totalGoal={props.totalGoal} totalPurchased={props.totalPurchased} onHome={false} onDetails={true} /> */}
                     <ProgramDonut data={dataForChart} />
+
+                    <h4>{totalGivers} Givers have donated so far</h4>
+                    {totalGiverIcons}
                 </Grid>
             </Grid>
 
