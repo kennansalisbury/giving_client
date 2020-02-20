@@ -17,7 +17,7 @@ const GiverContent = props => {
 
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [showDetails])
 
 
     //fetch data, and set state
