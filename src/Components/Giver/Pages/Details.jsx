@@ -55,6 +55,7 @@ const Details = props => {
         }
     }, [props.program])
 
+  
     const formatDataForChart = (tempTotal) => {
         let data = [
             {
@@ -231,15 +232,8 @@ const Details = props => {
         }
     }
 
-    // const setTotalGiverIcons = () => {
-    //     let totalGiverIcons = 0
-    //     for (let i = 0; i < totalGivers; i++) {
-    //         <FontAwesomeIcon icon={faUser} />
-    //     }
-    // }
-
-    let totalGiverIcons = setTotalGiverIcons()
     
+
 
     return (
         <Container>
@@ -265,7 +259,7 @@ const Details = props => {
                     <ProgramDonut data={dataForChart} />
 
                     <h4>{totalGivers} Givers have donated so far</h4>
-                    {totalGiverIcons}
+                    {/* {giverIcons} */}
                 </Grid>
             </Grid>
 
@@ -275,3 +269,25 @@ const Details = props => {
 
 
 export default Details
+
+// useEffect(() => {
+//     setTotalGiverIcons()
+// }, [totalGivers])
+
+
+
+    // let totalGiverIcons = []
+    // let giverIcons
+    // const setTotalGiverIcons = () => {
+    //     console.log('🎯🎯🎯', totalGivers)
+    //     for (let i = 0; i < totalGivers; i++) {
+    //         totalGiverIcons.push(i)
+    //     }
+    //     console.log('TOTAL GIVER ICONS', totalGiverIcons)
+        
+    //     giverIcons = totalGiverIcons.map((icon, i) => {
+    //         return <FontAwesomeIcon key={i} icon={faUser} />
+    //     }) 
+    
+    // }
+  
