@@ -22,6 +22,7 @@ const GiverContent = props => {
 
     //fetch data, and set state
     const fetchData = () => {
+       console.log(`Fetching data at ${process.env.REACT_APP_SERVER_URL}/programs/${props.user.id}`)
         fetch(`${process.env.REACT_APP_SERVER_URL}/programs/${props.user.id}`)
         .then(response => {
             response.json().then(data => {
@@ -39,7 +40,9 @@ const GiverContent = props => {
   }
 
     if (!allPrograms || !allPrograms.length) {
-        return <div>Loading...</div>
+        return <div>Loading...
+                        {message}
+        </div>
     }
 
     return (
@@ -48,7 +51,7 @@ const GiverContent = props => {
                 <Navbar user={props.user} updateUser={props.updateUser} setShowDetails={setShowDetails} />
             </header>
             <main>
-            {message}
+
                 <Home 
                     user={props.user} 
                     updateUser={props.updateUser} 
