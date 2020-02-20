@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Route} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import Home from './Pages/Home'
 import Details from './Pages/Details'
 
@@ -8,7 +8,7 @@ const GiverContent = props => {
     let [allPrograms, setAllPrograms] = useState([])
     let [giverItems, setGiverItems] = useState([])
     let [message, setMessage] = useState([])
-  
+   
     useEffect(() => {
         fetchData()
     }, [])
@@ -32,28 +32,6 @@ const GiverContent = props => {
         })
   }
 
-    // to get total goal for a program, get each item.goal_num from props.program.programItems and add together
-    const findTotalGoal = (programItemsArr) => {
-        let totalCounter = 0
-        programItemsArr.forEach(item => {
-            totalCounter += item.goal_num
-        })
-        return totalCounter
-    }
-
-    // to get total currently purchased for a program, get each item.num_purchased from giverItems
-    const findTotalPurchased = (programItemsArr) => {
-        let totalCounter = 0
-        programItemsArr.forEach(item => {
-            let counter = 0
-            item.giverItems.forEach(i => {
-                counter += i.num_purchased
-            })
-            totalCounter += counter
-        })
-        return totalCounter
-    }
-    
     if (!allPrograms || !allPrograms.length) {
         return <div>Loading...</div>
     }
@@ -61,30 +39,31 @@ const GiverContent = props => {
     return (
         <div>
             {message}
-           <Route exact path="/" 
-                render={() => 
-                    <Home 
-                        user={props.user} 
-                        updateUser={props.updateUser} 
-                        allPrograms={allPrograms} 
-                        giverItems={giverItems}
-                        findTotalGoal = {findTotalGoal}
-                        findTotalPurchased = {findTotalPurchased}
+            <Switch>
+                <Route exact path="/" 
+                        render={() => 
+                            <Home 
+                                user={props.user} 
+                                updateUser={props.updateUser} 
+                                allPrograms={allPrograms} 
+                                giverItems={giverItems}
+                            />
+                        }
                     />
-                }
-            />
-            <Route path="/:id" 
-                render={() => 
-                    <Details 
-                        user={props.user} 
-                        updateUser={props.updateUser} 
-                        allPrograms={allPrograms} 
-                        giverItems={giverItems}
-                        findTotalGoal = {findTotalGoal}
-                        findTotalPurchased = {findTotalPurchased}
-                    />
-                }
-            />
+
+                {/* <Route path={"/:id"} 
+                    render={() => 
+                        <Details 
+                            user={props.user} 
+                            updateUser={props.updateUser} 
+                            allPrograms={allPrograms}
+                            giverItems={giverItems}
+                        />
+                    }
+                /> */}
+
+            </Switch>
+            
         </div>
     )
 

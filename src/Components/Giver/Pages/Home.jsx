@@ -1,16 +1,52 @@
-import React from 'react'
-import Program from '../ProgramModule'
+import React, {useState} from 'react'
+import ProgramModule from '../ProgramModule'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
+import {Route} from 'react-router-dom'
+import Details from './Details'
 
 const Home = props => {
 
+    let [showHome, setShowHome] = useState(true)
+    let [showDetails, setShowDetails] = useState(false)
+    let [totalGoal, setTotalGoal] = useState(0)
+    let [totalPurchased, setTotalPurchased] = useState(0)
+    let [totalCurrentGiverPurch, setTotalCurrentGiverPurch] = useState(0)
+    let [currentProgram, setCurrentProgram] = useState({})
+
+    const showDetailsPage = (e, currentProgram, totalGoal, totalPurchased, totalCurrentGiverPurch) => {
+        e.preventDefault()
+        setCurrentProgram(currentProgram)
+        setTotalPurchased(totalPurchased)
+        setTotalGoal(totalGoal)
+        setTotalCurrentGiverPurch(totalCurrentGiverPurch)
+        setShowDetails(true)
+    }
+
+    if(showDetails) {
+        return(
+            <Details 
+                user={props.user} 
+                updateUser={props.updateUser} 
+                program={currentProgram}
+                totalPurchased={totalPurchased}
+                totalGoal={totalGoal}
+                totalCurrentGiverPurch = {totalCurrentGiverPurch}
+                setShowDetails = {setShowDetails}
+            />
+        )
+    }
+
     let allPrograms = props.allPrograms.map((program, i) => {
-        return <Program 
+    
+        return <ProgramModule 
                     key={i} 
-                    program={program}                         
-                    findTotalGoal = {props.findTotalGoal}
-                    findTotalPurchased = {props.findTotalPurchased}/>
+                    program={program}
+                    giverItems={props.giverItems}   
+                    showDetailsPage={showDetailsPage}                        
+                    user = {props.user}
+                    updateUser = {props.updateUser}
+                    />
     })
 
     return (

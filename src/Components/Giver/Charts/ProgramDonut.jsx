@@ -1,122 +1,92 @@
 import React, {useState, useEffect} from 'react'
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
 
+
 const ProgramDonut = props => {
 
-   const data = [
+    let data = [
         {
-            "name": "To Goal",
+            "name": "Items Needed",
             "value": (props.totalGoal - props.totalPurchased)
         },
         {
-            "name": "Donated to Date",
+            "name": "Items Donated to Date",
             "value": props.totalPurchased
         }
     ]
 
+    if(props.data) {
+        data = props.data
+    }
+        
+    
+    //     const data = [
+    //         {
+    //             "name": "To Goal",
+    //             "value": props.toGoal
+    //         },
+    //         {
+    //             "name": "Total Donated to Date",
+    //             "value": props.totalPurchased
+    //         },
+    //         {
+    //             "name": "Donated by YOU!",
+    //             "value": props.giverPurchased
+    //         },
+    //     ]
+    // }
 
+
+    const renderTooltip = (entry) => {
+        
+        // console.log(entry)
+
+
+        if(entry.payload.length) {
+
+                return(
+                    <div>
+                        <small>{entry.payload[0].payload.value} {entry.payload[0].payload.name}</small>
+                    </div>
+                )
+            }
 
     
-    console.log('GOAL:', props.totalGoal, 'TOTALPURCHASED', props.totalPurchased, 'DATA', data)
-
-    const RADIAN = Math.PI / 180
-
-    const renderCustomLabel = ({
-        cx, cy, percent, innerRadius, outerRadius, midAngle
-    }) => {
-        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-        const x = cx + radius * Math.cos(-midAngle * RADIAN);
-        const y = cy + radius * Math.sin(-midAngle * RADIAN);
-      
-
-        return(
-            <h1 x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-                Test
-            </h1>
-        )
+            return(
+                <div>TEST</div>
+            )
+        
     }
 
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+
     return (
 
-
+<div>
             <PieChart width={200} height={200}>
                 <Pie 
                     data={data}
                     dataKey="value" nameKey="name" 
                     cx="50%" cy="50%" 
-                    // innerRadius={60} 
+                    innerRadius={50} 
                     outerRadius={70}
-            
+                    startAngle={0}
+                    endAngle={180}
                     fill="#8884d8" 
                     // label
                 >
                     {
-                        data.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.name == "To Goal" ? "#9994d9" : "#8884d8"} />)
+                        data.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.name == "Items Needed" ? "#e2e1f6" : "#8884d8"} />)
                     }
                 </Pie>
-                <Tooltip />
+                <Tooltip content={entry => renderTooltip(entry)} />
             </PieChart>
- 
+
+     
+         </div>
     )
 }
 
 export default ProgramDonut
-
-
-
-// export default ProgramDonut
-
-
-// import CanvasJSReact from '../../lib/canvasjs.react'
-
-// let CanvasJS = CanvasJSReact.CanvasJS
-// let CanvasJSChart = CanvasJSReact.CanvasJSChart
-
-// class ProgramDonut extends React.Component {
-//     render() {
-//         console.log(this.props.totalPurchased, this.props.totalGoal)
-//         if(!this.props.totalPurchased || !this.props.totalGoal) {
-//             return (<div></div>)
-//         }
-
-//         const options = {
-//                 animationEnabled: true,
-//                 title: {
-//                     text: 'Num to goal'
-//                 },
-//                 subtitles: [{
-//                     text: '71% Positive',
-//                     verticalAlign: 'center',
-//                     fontSize: 24,
-//                     dockInsidePlotArea: true
-//                 }],
-//                 data: [{
-//                     type: 'doughnut',
-//                     showInLegend: true,
-//                     indexLabel: '{name}: {y}',
-//                     yValueFormatString: "#,###'%'",
-//                     dataPoints: [
-//                         {name: 'Unsatisfied', y: 45 },
-//                         {name: 'Satisfied', y: 55}
-//                     ]
-//                 }]
-//             }
-//         return (
-
-//             <div>
-//                 <CanvasJSChart options = {options} />
-
-//             </div>
-
-//         )
-//     }
-
-
-// }
-
-// export default ProgramDonut
-
 
 
 

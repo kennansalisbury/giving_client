@@ -2,18 +2,17 @@ import React, {useState, useEffect} from 'react'
 import {useParams} from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
 import {PayPalButton} from 'react-paypal-button-v2'
 
 
 import ProgramItem from '../ProgramItem'
 import PurchaseConfirm from './PurchaseConfirm'
+import ProgramDonut from '../Charts/ProgramDonut'
 
 
 const Details = props => {
-    
-    let {id} = useParams()
 
-    let [selectedProgram, setSelectedProgram] = useState(null)
     let [totalCost, setTotalCost] = useState(0)
     let [message, setMessage] = useState('')
     let [itemsInCart, setItemsInCart] = useState([])
@@ -23,17 +22,16 @@ const Details = props => {
     let [loopCounter, setLoopCounter] = useState(0)
     let [orderId, setOrderId] = useState()
     let [itemsPurchased, setItemsPurchased] = useState([])
+    let [tempCountTotal, setTempCountTotal] = useState([])
+    let [dataForChart, setDataForChart] = useState([])
 
-    //on load, grab id from params and set selected program state to the program that was clicked on
-    useEffect(() => {
-        setSelectedProgram(props.allPrograms.find(program => program.id == id))
-    }, [props.allPrograms, id])
 
-    //when selectedProgram changes (i.e. loads), create temporary object to keep track of item counts 
+
+    //when program changes (i.e. loads), create temporary object to keep track of item counts 
     const initCounts = () => {
-        if(selectedProgram) {
+        if(props.program) {
             let temp = {}
-            selectedProgram.programItems.forEach(item => {
+            props.program.programItems.forEach(item => {
                 temp[item.id] = 0
             })
             setCounts(temp)
@@ -41,24 +39,37 @@ const Details = props => {
     }
     
     useEffect(() => {
-        initCounts()
-    }, [selectedProgram])
+        if(props.program) {
+            initCounts()
+        }
+    }, [props.program])
+
+    useEffect(() => {
+  
+        let total = 0
+        props.program.programItems.forEach(item => {
+            total += counts[item.id]
+        }) 
+        setTempCountTotal(total)
+        console.log('temp total counts:', total)
+    }, [counts])
 
 
     //total cost for "cart" and set the items in cart for purchasing
     const addToCart = (e) => {
         e.preventDefault()
         setMessage('')
+
         let total = 0
-        selectedProgram.programItems.forEach(item => {
+        props.program.programItems.forEach(item => {
             total += (counts[item.id] * item.cost)
         })
-        console.log('set total cost to:', total)
+
         if(total === 0) {
             setMessage('You have not added anything to your cart yet.')
         } else {
             setTotalCost(total.toFixed(2)) 
-            let cart = selectedProgram.programItems.filter(item => counts[item.id] > 0)  
+            let cart = props.program.programItems.filter(item => counts[item.id] > 0)  
             setItemsInCart(cart)
             console.log('CART ITEMS:', itemsInCart )
             setShowCart(true) 
@@ -95,7 +106,7 @@ const Details = props => {
         )
 
         data.forEach(item => {
-            console.log('DATA SENT 🌈🌈🌈', JSON.stringify(item))
+       
             //fetch to giveritems post route
             fetch(`${process.env.REACT_APP_SERVER_URL}/items/giver`, {
                 method: 'POST',
@@ -107,9 +118,9 @@ const Details = props => {
             })
             .then(response => response.json()
                 .then(result => {
-                    // console.log('🌈🌈🌈DATA RETURNED 🌈🌈🌈', result)
+                    
                     setLoopCounter(loopCounter += 1)
-                    console.log('LOOP COUNTER 🥁',loopCounter)
+                
                     if(loopCounter === data.length) {
                         setPurchaseConfirm(true)
                     }
@@ -124,27 +135,28 @@ const Details = props => {
 
         
     
-    if(!selectedProgram) {
+    if(!props.program) {
         return <div>Loading...</div>
     }
 
     if(purchaseConfirm) {
-        console.log('ITEMS PURCHASED', itemsPurchased)
-        return <PurchaseConfirm selectedProgram={selectedProgram} totalCost={totalCost} orderId={orderId} itemsPurchased={itemsPurchased}/>
+ 
+        return <PurchaseConfirm program={props.program} totalCost={totalCost} orderId={orderId} itemsPurchased={itemsPurchased} setShowDetails={props.setShowDetails}/>
     }
 
-    let itemsList = selectedProgram.programItems.map((item, i) => {
+    let itemsList = props.program.programItems.map((item, i) => {
 
         return <ProgramItem key={i} cartShowing={showCart} item={item} counts={counts} setCounts={setCounts} userId={props.user.id} />
             
     })
+
 
     if(showCart) {
 
         return (
            
            <Container>
-                    <h1>{selectedProgram.name}</h1>
+                    <h1>{props.program.name}</h1>
                     <h3>Your Cart</h3>
                     {totalCost > 0 ? <p>Total Cost: ${totalCost} </p> : <p>You have no items in your cart yet</p>}    
                     <form>
@@ -177,16 +189,28 @@ const Details = props => {
 
     return (
         <Container>
-            <h1>{selectedProgram.name}</h1>
-            <form>
-                <h3>Items Needed</h3>
-                {itemsList}
-                <Button variant="contained" onClick={e => addToCart(e)}>Add To My Cart</Button>
-                {message}
-            </form>
-        </Container>
+            <Grid container
+                direction="row"
+                justify-content="flex-start"
+                align-items="center"
+            >
+                <Grid item xs={12} sm={6}>
+                    <h1>{props.program.name}</h1>
+                    <form>
+                        <h3>Items Needed</h3>
+                        {itemsList}
+                        <Button variant="contained" onClick={e => addToCart(e)}>Add To My Cart</Button>
+                        {message}
+                    </form>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <h1>Progress to Goal</h1>
+                    <ProgramDonut totalGoal={props.totalGoal} totalPurchased={props.totalPurchased} />
 
-        
+                </Grid>
+            </Grid>
+
+        </Container>
     )
 }
 
