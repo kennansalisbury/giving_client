@@ -18,24 +18,6 @@ const ProgramDonut = props => {
     if(props.data) {
         data = props.data
     }
-        
-    
-    //     const data = [
-    //         {
-    //             "name": "To Goal",
-    //             "value": props.toGoal
-    //         },
-    //         {
-    //             "name": "Total Donated to Date",
-    //             "value": props.totalPurchased
-    //         },
-    //         {
-    //             "name": "Donated by YOU!",
-    //             "value": props.giverPurchased
-    //         },
-    //     ]
-    // }
-
 
     const renderTooltip = (entry) => {
         
@@ -58,10 +40,12 @@ const ProgramDonut = props => {
         
     }
 
+    let tooltip = <Tooltip content={entry => renderTooltip(entry)} />
+
 
     return (
 
-<div>
+        <div>
             <PieChart width={200} height={200}>
                 <Pie 
                     data={data}
@@ -72,13 +56,13 @@ const ProgramDonut = props => {
                     startAngle={0}
                     endAngle={180}
                     fill="#8884d8" 
-                    // label
                 >
                     {
                         data.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.name == "Items Needed" ? "#e2e1f6" : "#8884d8"} />)
                     }
                 </Pie>
-                <Tooltip content={entry => renderTooltip(entry)} />
+                {props.onDetails? tooltip : ''}
+                
             </PieChart>
 
      

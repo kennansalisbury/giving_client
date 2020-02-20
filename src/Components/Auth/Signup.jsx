@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import {Link} from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -20,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     root: {
         '& .MuiTextField-root': {
           margin: theme.spacing(1),
-          width: 200,
+          width: "95%",
         }
     }
   }));
@@ -112,23 +113,17 @@ const Signup = props => {
   
 
     return (
-        <Grid item xs={12} s={6}>
-            <Card>
+        <Grid item xs={8} sm={6}>
+            <Card className="login-cards">
                 <CardContent>
                     <h5 align="center">Sign up</h5>
                     <p>{message}</p>
                     <form className={classes.root} onSubmit={handleSubmit}>
-                        <FormGroup>
-                            {/* <FormLabel>first name</FormLabel> */}
-                            <TextField required label="firstname" onChange={e => setFirstname(e.currentTarget.value)}/>
-                            {/* <FormLabel>last name</FormLabel> */}
+                        <FormGroup> 
+                            <TextField required label="firstname" onChange={e => setFirstname(e.currentTarget.value)}/>      
                             <TextField label="lastname" onChange={e => setLastname(e.currentTarget.value)}/>
-                        {/* </FormGroup>
-                        <FormGroup> */}
-                            {/* <FormLabel>email</FormLabel> */}
                             <TextField required type="text" label="email" onChange={e => setEmail(e.currentTarget.value)}/>
-                            {/* <FormLabel>password</FormLabel> */}
-                            <TextField required type="text" label="password" onChange={e => setPassword(e.currentTarget.value)}/>
+                            <TextField required type="password" label="password" onChange={e => setPassword(e.currentTarget.value)}/>
                         </FormGroup>
                         <FormGroup>
                             <FormControl component="fieldset" className={classes.formControl}>
@@ -143,6 +138,9 @@ const Signup = props => {
                             <Button type="submit" variant="contained" size="small">Sign up</Button>
                         
                     </form>
+                    <br/>
+
+                    <p>Already have an account with us?</p><Link to="/">Login Here</Link>
                 </CardContent>
             </Card>
         </Grid>

@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons'
-import{Button, Drawer, AppBar, Toolbar, makeStyles, List, ListItem, ListItemText, IconButton, Menu, MenuItem} from '@material-ui/core'
+import{Divider, Drawer, AppBar, Grid, Toolbar, makeStyles, List, ListItem, ListItemText, IconButton, Menu, MenuItem} from '@material-ui/core'
 
 
 const useStyles = makeStyles(theme => ({
@@ -16,20 +16,17 @@ const useStyles = makeStyles(theme => ({
       flexGrow: 1,
     },
     list: {
-      width: 250,
-    },
-    fullList: {
-      width: 'auto',
-    },
+      width: 200,
+    }
 }));
 
 const Navbar = props => {
     let classes= useStyles()
-  
+
     let [profilePhoto, setProfilePhoto] = useState(<FontAwesomeIcon icon={faUserCircle}/>)
     let [drawerState, setDrawerState] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null)
-    const open = Boolean(anchorEl)
+    const openMenu = Boolean(anchorEl)
 
     const toggleDrawer = (open) => event => {
         setDrawerState(open)
@@ -55,6 +52,10 @@ const Navbar = props => {
         setProfilePhoto(<img className="profileIcon" src={props.user.profilePhoto} alt="profile-icon"/>)
     }
 
+    const redirectToHome = e => {
+  
+        props.setShowDetails(false)
+    }
 
     let profileIcon = profilePhoto
 
@@ -66,13 +67,13 @@ const Navbar = props => {
                 onClick={toggleDrawer(false)}
             >
                 <List>
-                    <Link to="/">
-                        <ListItem>
-                            <ListItemText>Home</ListItemText>
-                        </ListItem>
-                    </Link>
-                    
-                    <ListItem>
+
+                    <ListItem className="program-mod-link" onClick={(e) => redirectToHome() }>
+                        <ListItemText>Home</ListItemText>
+                    </ListItem>
+                
+                    <Divider/>
+                    <ListItem className="program-mod-link">
                         <ListItemText>Account</ListItemText>
                     </ListItem>
                 </List>
@@ -86,41 +87,47 @@ const Navbar = props => {
             <AppBar position="static" color="transparent">
                 
                 <Toolbar>
-                    <IconButton onClick={toggleDrawer(true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        {homeIcon}
-                        <Drawer open={drawerState} onClose={toggleDrawer(false)}>
-                            {sideList()}
-                        </Drawer>
-                    </IconButton> 
-                    <div>
-                        <IconButton
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleMenu}
-                            color="inherit"
-                        >
-                            {profileIcon}
-                        </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                            }}
-                            open={open}
-                            onClose={handleClose}
-                        >
-                            <MenuItem onClick={handleClose}>Account</MenuItem>
-                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                        </Menu>
-                    </div>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="space-between">
+                        <Grid item>
+                            <IconButton onClick={toggleDrawer(true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                                {homeIcon}
+                            </IconButton> 
+                            <Drawer open={drawerState} onClose={toggleDrawer(false)}>
+                                    {sideList()}
+                            </Drawer>
+                        </Grid>
+                        <Grid item>
+                            <IconButton
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleMenu}
+                                color="inherit"
+                            >
+                                {profileIcon}
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                                }}
+                                open={openMenu}
+                                onClose={handleClose}
+                            >
+                                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                            </Menu>
+                        </Grid>
+                    </Grid>
                 </Toolbar>
 
             </AppBar>

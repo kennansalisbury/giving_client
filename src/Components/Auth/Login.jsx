@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import {Link, Redirect} from 'react-router-dom'
 import TextField from '@material-ui/core/TextField'
 import FormControl from '@material-ui/core/FormControl'
 import Button from '@material-ui/core/Button'
@@ -12,7 +13,7 @@ const useStyles = makeStyles(theme => ({
       '& .MuiTextField-root': {
         margin: theme.spacing(1),
         width: 200,
-      },
+      }
     },
   }));
 
@@ -62,18 +63,20 @@ const Login = props => {
     }
     
     return (
-            <Grid item xs={12} sm={6}>
-                <Card>
-                    <CardContent align="center">
+            <Grid item xs={9} sm={6}>
+                <Card className="login-cards">
+                    <CardContent align="center" >
                         <h5>Login</h5>
                         <form className={classes.root} onSubmit={handleSubmit}>
                             <FormControl>
                                 <TextField required  label="Email"  size="small" onChange={e => setEmail(e.currentTarget.value)}/>
-                                <TextField required  label="Password" size="small" onChange={e => setPassword(e.currentTarget.value)}/>
+                                <TextField required type="password" label="Password" size="small" onChange={e => setPassword(e.currentTarget.value)}/>
                                 <Button type="submit" variant="contained" size="small">Submit</Button>
                             </FormControl>
                         </form>
                         <p>{message}</p>
+                        <p>Don't have an account yet? </p>
+                        <Link to="/signup">Sign up here</Link>
                     </CardContent>
                 </Card>
             </Grid>

@@ -1,14 +1,14 @@
 import React, {useState} from 'react'
+import {Route} from 'react-router-dom'
 import ProgramModule from '../ProgramModule'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
-import {Route} from 'react-router-dom'
+
 import Details from './Details'
 
 const Home = props => {
-
-    let [showHome, setShowHome] = useState(true)
-    let [showDetails, setShowDetails] = useState(false)
+    console.log('home, show details', props.showDetails)
+    // let [showDetails, setShowDetails] = useState(false)
     let [totalGoal, setTotalGoal] = useState(0)
     let [totalPurchased, setTotalPurchased] = useState(0)
     let [totalCurrentGiverPurch, setTotalCurrentGiverPurch] = useState(0)
@@ -20,10 +20,13 @@ const Home = props => {
         setTotalPurchased(totalPurchased)
         setTotalGoal(totalGoal)
         setTotalCurrentGiverPurch(totalCurrentGiverPurch)
-        setShowDetails(true)
+
+        props.setShowDetails(true)
     }
 
-    if(showDetails) {
+
+
+    if(props.showDetails) {
         return(
             <Details 
                 user={props.user} 
@@ -32,11 +35,11 @@ const Home = props => {
                 totalPurchased={totalPurchased}
                 totalGoal={totalGoal}
                 totalCurrentGiverPurch = {totalCurrentGiverPurch}
-                setShowDetails = {setShowDetails}
+                setShowDetails = {props.setShowDetails}
             />
         )
     }
-
+   
     let allPrograms = props.allPrograms.map((program, i) => {
     
         return <ProgramModule 

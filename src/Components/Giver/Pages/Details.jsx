@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {useParams} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
@@ -23,7 +23,14 @@ const Details = props => {
     let [orderId, setOrderId] = useState()
     let [itemsPurchased, setItemsPurchased] = useState([])
     let [tempCountTotal, setTempCountTotal] = useState([])
-    let [dataForChart, setDataForChart] = useState([])
+    let [dataForChart, setDataForChart] = useState([{
+        "name": "Items Needed",
+        "value": (props.totalGoal - props.totalPurchased)
+    },
+    {
+        "name": "Items Donated to Date",
+        "value": props.totalPurchased
+    }])
 
 
 
@@ -44,16 +51,31 @@ const Details = props => {
         }
     }, [props.program])
 
-    useEffect(() => {
-  
+    const formatDataForChart = (tempTotal) => {
+        let data = [
+            {
+                "name": "Items Needed",
+                "value": (props.totalGoal - (props.totalPurchased + tempTotal))
+            },
+            {
+                "name": "Items Donated to Date",
+                "value": props.totalPurchased + tempTotal
+            }
+        ]
+        setDataForChart(data)
+        console.log('CHART DATA', dataForChart)
+    }
+
+    const tempTotalCounts = (counts) => {
         let total = 0
         props.program.programItems.forEach(item => {
             total += counts[item.id]
         }) 
-        setTempCountTotal(total)
         console.log('temp total counts:', total)
-    }, [counts])
+        setTempCountTotal(total)
+        formatDataForChart(total)
 
+    }
 
     //total cost for "cart" and set the items in cart for purchasing
     const addToCart = (e) => {
@@ -146,7 +168,7 @@ const Details = props => {
 
     let itemsList = props.program.programItems.map((item, i) => {
 
-        return <ProgramItem key={i} cartShowing={showCart} item={item} counts={counts} setCounts={setCounts} userId={props.user.id} />
+        return <ProgramItem key={i} tempTotalCounts={tempTotalCounts} cartShowing={showCart} item={item} counts={counts} setCounts={setCounts} userId={props.user.id} />
             
     })
 
@@ -187,26 +209,32 @@ const Details = props => {
 
     }
 
+    if(!props.user) {
+        return <Redirect to="/login"/>
+    }
+
     return (
         <Container>
+            <h1>{props.program.name}</h1>
             <Grid container
                 direction="row"
                 justify-content="flex-start"
                 align-items="center"
             >
                 <Grid item xs={12} sm={6}>
-                    <h1>{props.program.name}</h1>
                     <form>
                         <h3>Items Needed</h3>
+                        <h5>Start adding items to your list to see how you can help us reach our goals!</h5>
                         {itemsList}
                         <Button variant="contained" onClick={e => addToCart(e)}>Add To My Cart</Button>
                         {message}
                     </form>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                    <h1>Progress to Goal</h1>
-                    <ProgramDonut totalGoal={props.totalGoal} totalPurchased={props.totalPurchased} />
-
+                <Grid item sm={1}/>
+                <Grid item xs={12} sm={5}>
+                    <h3>Progress to Total Program Goal</h3>
+                    {/* <ProgramDonut tempCountTotal={tempCountTotal} totalGoal={props.totalGoal} totalPurchased={props.totalPurchased} onHome={false} onDetails={true} /> */}
+                    <ProgramDonut data={dataForChart} />
                 </Grid>
             </Grid>
 

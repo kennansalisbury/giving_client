@@ -11,3 +11,15 @@
   height: 1em;
   margin-right: 5px;
 }
+
+.login-background {
+  background-image: url('./static/img/background.jpg');
+  background-size: cover;
+  height: 150vh;
+}
+
+.login-cards {
+  opacity: .8;
+  background: whitesmoke;
+  padding: 10px;
+}

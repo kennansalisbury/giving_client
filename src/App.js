@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import jwtDecode from 'jwt-decode'
-import {BrowserRouter as Router} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 import './App.css';
 import Grid from '@material-ui/core/Grid'
@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid'
 import Login from './Components/Auth/Login'
 import Signup from './Components/Auth/Signup'
 import GiverContent from './Components/Giver/GiverContent'
-import Navbar from './Components/Navbar'
+
 
 
 
@@ -58,36 +58,33 @@ function App() {
 
   if(user) {
     return (
-      <Router>
-        <header>
-          <Navbar user={user} updateUser={updateUser} />
-        </header>
-        <main>
-          <GiverContent 
-            user={user} 
-            updateUser={updateUser} 
-          />
-        </main>
-        {/* <footer>
-          <Footer />
-        </footer> */}
-      </Router>
+      <div>
+        <Route exact path="/" 
+            render={() => 
+                <GiverContent 
+                user={user} 
+                updateUser={updateUser} 
+              />
+            }
+        /> 
+
+      </div>
     )
   } else {
-
- 
-
   return (
-    <Grid 
-      container 
-      direction ="column"
-      justify = "center"
-      alignItems = "center"
-      spacing = {4}
-    >
-        <Login user={user} updateUser={updateUser} />
-        <Signup user={user} updateUser={updateUser} />
-    </Grid>
+      <Grid 
+        className="login-background"
+        container 
+        direction ="column"
+        justify = "center"
+        alignItems = "center"
+        spacing = {4}
+      >
+        <h1 className="login-cards">The Giving Tree</h1>
+        <Route exact path={"/"} render={() => <Login updateUser={updateUser}/>}/>
+        <Route path={"/signup"} render={() => <Signup updateUser={updateUser} /> }/>
+        <a style={{color:"gray", fontSize: "8px"}} href="https://unsplash.com/@davidvig?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" target="_blank" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from David Vig">Photo credit: David Vig on Unsplash</a>
+      </Grid>
   )
 }
 

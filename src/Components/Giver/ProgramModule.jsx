@@ -86,7 +86,7 @@ const ProgramModule = props => {
                     <p>{props.program.description}</p>
                     <p>Ends: <Moment fromNow>{props.program.endDate}</Moment> </p>
                     <h4>Progress to Goal</h4>
-                    <ProgramDonut data={dataForChart}/>
+                    <ProgramDonut data={dataForChart} onHome={true} onDetails={false}/>
                 </CardContent>
             </Card>
             {/* </Link> */}

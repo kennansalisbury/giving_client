@@ -2,13 +2,19 @@ import React, {useState, useEffect} from 'react'
 import {Route, Switch} from 'react-router-dom'
 import Home from './Pages/Home'
 import Details from './Pages/Details'
+import Navbar from '../Navbar'
 
 const GiverContent = props => {
+
+
 
     let [allPrograms, setAllPrograms] = useState([])
     let [giverItems, setGiverItems] = useState([])
     let [message, setMessage] = useState([])
+    let [showDetails, setShowDetails] = useState(false)
    
+    console.log('show details', showDetails)
+
     useEffect(() => {
         fetchData()
     }, [])
@@ -38,32 +44,26 @@ const GiverContent = props => {
 
     return (
         <div>
+            <header>
+                <Navbar user={props.user} updateUser={props.updateUser} setShowDetails={setShowDetails} />
+            </header>
+            <main>
             {message}
-            <Switch>
-                <Route exact path="/" 
-                        render={() => 
-                            <Home 
-                                user={props.user} 
-                                updateUser={props.updateUser} 
-                                allPrograms={allPrograms} 
-                                giverItems={giverItems}
-                            />
-                        }
-                    />
-
-                {/* <Route path={"/:id"} 
-                    render={() => 
-                        <Details 
-                            user={props.user} 
-                            updateUser={props.updateUser} 
-                            allPrograms={allPrograms}
-                            giverItems={giverItems}
-                        />
-                    }
-                /> */}
-
-            </Switch>
-            
+                <Home 
+                    user={props.user} 
+                    updateUser={props.updateUser} 
+                    allPrograms={allPrograms} 
+                    giverItems={giverItems}
+                    setShowDetails={setShowDetails}
+                    showDetails={showDetails}
+                />   
+            </main>
+            {/* <Home 
+                user={props.user} 
+                updateUser={props.updateUser} 
+                allPrograms={allPrograms} 
+                giverItems={giverItems}
+            />     */}
         </div>
     )
 
