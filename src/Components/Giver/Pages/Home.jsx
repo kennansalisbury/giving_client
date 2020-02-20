@@ -7,6 +7,8 @@ import Grid from '@material-ui/core/Grid'
 import Details from './Details'
 
 const Home = props => {
+    console.log('Hello', props.user.firstname)
+    
     // console.log('home, show details', props.showDetails)
     // let [showDetails, setShowDetails] = useState(false)
     let [totalGoal, setTotalGoal] = useState(0)
