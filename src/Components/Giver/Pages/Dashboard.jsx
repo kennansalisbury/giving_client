@@ -93,7 +93,7 @@ const Dashboard = props => {
 
     let topItemsList = topItems.map((item, i) => {
         while(i < 4) {
-            return <p key={i}>{item.name} : {item.num_purchased}</p>
+            return <p>{i + 1}. {item.name} : {item.num_purchased}</p>
         }  
     })
 
@@ -120,6 +120,7 @@ const Dashboard = props => {
             {message}
             <h1>Hi, {props.user.firstname}</h1>
             <h3>Thanks for all you've contributed!</h3>
+            <hr/>
             <Grid
                 container
                 direction="row"
@@ -127,12 +128,14 @@ const Dashboard = props => {
                 align="flex-start"
             >
                 <Grid item xs={12} sm={5}>
-                    <Card className="dashboard-card">
+                    {/* <Card className="dashboard-card"> */}
+                    <Card>
                         <CardContent>
+                        <h5>Your Contributions:</h5>
                         <Grid 
                         container
                         direction="row"
-                        justify="center"
+                        justify="flex-start"
                         align="flex-start"
                     >
                         <Grid item xs={6} sm={6}>
