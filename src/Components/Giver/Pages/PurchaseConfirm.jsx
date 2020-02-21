@@ -1,6 +1,11 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import Container from '@material-ui/core/Container'
+import NumberFormat from 'react-number-format'
 
 const PurchaseConfirm = props => {
 
@@ -14,15 +19,29 @@ const PurchaseConfirm = props => {
         })
     
         return (
-            <div>
-            <h1>Thank you for your donation</h1>
-            <h2>to {props.program.name}</h2>
-            <h3>Order #: {props.orderId}</h3>
-            <h3>Items in order:</h3>
-            {orderItems}
-            <h4>Total: {props.totalCost}</h4>
-            <Button onClick={e => props.setShowDetails(false)}>Return Home</Button>
-        </div>
+             <Container>
+                <br/><br/>
+                <h2>Thank you for your donation, {props.user.firstname}!</h2>
+                <hr/>
+                <p>Order #: {props.orderId}</p>
+                <h3>Items in order:</h3>
+                <Grid container
+                    direction="row"
+                    justify-content="flex-start"
+                    align-items="center"
+                >
+                    <Grid item xs={12} sm={6}>      
+                        <Card variant="outlined">
+                            <CardContent>{orderItems}</CardContent>
+                        </Card>
+                        <br/>
+                        <h5>Total: <NumberFormat thousandSeparator={true} displayType={'text'} value={props.totalCost} prefix={'$'}/></h5>
+                    </Grid>
+                    <Grid item xs={12} sm={6}></Grid>
+                    <br/>
+                    <Button variant="contained" onClick={e => props.setShowDetails(false)}>Return Home</Button>
+                </Grid>
+            </Container>
     )
     }
 }

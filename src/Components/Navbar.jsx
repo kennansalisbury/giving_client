@@ -3,7 +3,7 @@ import {Link, Redirect} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import{Divider, Drawer, AppBar, Grid, Toolbar, makeStyles, List, ListItem, ListItemText, IconButton, Menu, MenuItem} from '@material-ui/core'
-
+import logoIcon from '../static/img/logo_black_icon.png'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -47,15 +47,11 @@ const Navbar = props => {
         setAnchorEl(null);
       }
 
-    let homeIcon = <FontAwesomeIcon icon={faHome} color="black" />
+    // let homeIcon = <FontAwesomeIcon icon={faHome} color="black" />
+    let homeIcon = <img src={logoIcon} alt="logo-icon" height="30em"/>
     
     if(props.user.profilePhoto) {
         setProfilePhoto(<img className="profileIcon" src={props.user.profilePhoto} alt="profile-icon"/>)
-    }
-
-    const redirectToHome = e => {
-  
-        props.setShowDetails(false)
     }
 
     let profileIcon = profilePhoto
@@ -69,13 +65,17 @@ const Navbar = props => {
             >
                 <List>
 
-                    <ListItem className="program-mod-link" onClick={(e) => redirectToHome() }>
+                    <ListItem>
+                    <Link className="link" to="/">
                         <ListItemText>Home</ListItemText>
+                    </Link>
                     </ListItem>
                 
                     <Divider/>
-                    <ListItem className="program-mod-link">
+                    <ListItem>
+                        <Link className="link" to="/account">
                         <ListItemText>Dashboard</ListItemText>
+                        </Link>
                     </ListItem>
                 </List>
 
@@ -99,6 +99,7 @@ const Navbar = props => {
                             <Drawer open={drawerState} onClose={toggleDrawer(false)}>
                                     {sideList()}
                             </Drawer>
+                            
                         </Grid>
                         <Grid item>
                             <IconButton

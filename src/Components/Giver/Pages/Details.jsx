@@ -3,9 +3,12 @@ import {Redirect, Link} from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
 import {PayPalButton} from 'react-paypal-button-v2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import NumberFormat from 'react-number-format'
 
 
 import ProgramItem from '../ProgramItem'
@@ -25,6 +28,7 @@ const Details = props => {
     let [orderId, setOrderId] = useState()
     let [itemsPurchased, setItemsPurchased] = useState([])
     let [totalGivers, setTotalGivers] = useState(0)
+    let [giverCounts, setGiverCounts] = useState([])
  
     let [dataForChart, setDataForChart] = useState([{
         "name": "Items Needed",
@@ -172,7 +176,7 @@ const Details = props => {
 
     if(purchaseConfirm) {
  
-        return <PurchaseConfirm program={props.program} totalCost={totalCost} orderId={orderId} itemsPurchased={itemsPurchased} setShowDetails={props.setShowDetails}/>
+        return <PurchaseConfirm user={props.user} program={props.program} totalCost={totalCost} orderId={orderId} itemsPurchased={itemsPurchased} setShowDetails={props.setShowDetails}/>
     }
 
     let itemsList = props.program.programItems.map((item, i) => {
@@ -187,31 +191,50 @@ const Details = props => {
         return (
            
            <Container>
-                    <FontAwesomeIcon icon={faAngleLeft} color="black" size="lg" onClick={e => updateCart(e)} className="program-mod-link"/>
-                    <h1>{props.program.name}</h1>
-                    <h3>Your Cart</h3>
-                    {totalCost > 0 ? <p>Total Cost: ${totalCost} </p> : <p>You have no items in your cart yet</p>}    
-                    <form>
-                        {itemsList}
-                        <Button variant="contained" onClick={e => updateCart(e)}>Update My Cart</Button>
-                        {message}
-                        <PayPalButton
-                            amount={totalCost}
-                            onSuccess={(details) => {
-                                console.log(details)
-                                setOrderId(details.id)
-                                handleSubmit()
-                            }}
-                            catchError={err => {
-                                console.log(err)
-                                setMessage(`Payment declined, or there was an error with your transaction method. Try again.`)
-                            }}
-                            onError={err => {
-                                setMessage(`Transaction Error. Try again.`)
-                            }}
-                            style={{layout: "vertical", tagline: false}}
-                        />
-                    </form>
+                <br/>
+                <FontAwesomeIcon icon={faAngleLeft} color="black" size="lg" onClick={e => updateCart(e)} className="program-mod-link"/>
+                <br/><br/>
+                <h1>{props.program.name}</h1>
+                <hr/>
+                <h3>Your Cart</h3>
+                {totalCost > 0 ? <p>Total Cost: <NumberFormat thousandSeparator={true} displayType={'text'} value={totalCost} prefix={'$'}/> </p> : <p>You have no items in your cart yet</p>}    
+                <Grid container
+                    direction="row"
+                    justify-content="flex-start"
+                    align-items="center"
+                >
+                    <Grid item xs={12} sm={6}>                
+                        <form>
+                            <Card variant="outlined">
+                                <CardContent>{itemsList}</CardContent>
+                            </Card>
+                            <Button variant="contained" onClick={e => updateCart(e)}>Update My Cart</Button>
+                            <br/>
+                            {message}
+                            <br/>
+                            <div xs={12} sm={6}>
+
+                            <PayPalButton
+                                amount={totalCost}
+                                onSuccess={(details) => {
+                                    console.log(details)
+                                    setOrderId(details.id)
+                                    handleSubmit()
+                                }}
+                                catchError={err => {
+                                    console.log(err)
+                                    setMessage(`Payment declined, or there was an error with your transaction method. Try again.`)
+                                }}
+                                onError={err => {
+                                    setMessage(`Transaction Error. Try again.`)
+                                }}
+                                style={{layout: "vertical", tagline: false}}
+                            />
+                            </div>
+                        </form>
+                        </Grid>
+                    <Grid item xs={12} sm={6}></Grid>
+                </Grid>
             </Container>
     
             
@@ -231,23 +254,32 @@ const Details = props => {
                 
                     if(!temp[gi.usd]) {
                         temp[gi.usd] = 1
-                    } else {
-                        temp[gi.usd] = temp[gi.usd] += 1
+                    // } else {
+                    //     temp[gi.usd] = temp[gi.usd] += 1
                     }
                     
                 }) 
             })
-           return Object.keys(temp).reduce((total, key) => parseInt(total) + temp[key], 0)
+           setGiverCounts(Object.keys(temp))
+           return Object.keys(temp).length
         }
     }
 
-    
+    let giverIcons = giverCounts.map((giver, i) => {
+        return <FontAwesomeIcon key={i} icon={faUser} />
+    })
 
 
     return (
         <Container>
+            <br/>
             <FontAwesomeIcon icon={faAngleLeft} color="black" size="lg" onClick={e => props.setShowDetails(false)} className="program-mod-link"/>
+            <br/>
+            <br/>
             <h1>{props.program.name}</h1>
+            <hr/>
+            <h3>Items Needed</h3>
+            <h6>Start adding items to your list to see how you can help us reach our goals!</h6>
             <Grid container
                 direction="row"
                 justify-content="flex-start"
@@ -255,21 +287,22 @@ const Details = props => {
             >
                 <Grid item xs={12} sm={6}>
                     <form>
-                        <h3>Items Needed</h3>
-                        <h5>Start adding items to your list to see how you can help us reach our goals!</h5>
-                        {itemsList}
+                        <Card variant="outlined">
+                            <CardContent>{itemsList}</CardContent>
+                        </Card>
+                        <br/>
                         <Button variant="contained" onClick={e => addToCart(e)}>Add To My Cart</Button>
+                        <br/>
                         {message}
                     </form>
+                    <br/>
                 </Grid>
-                <Grid item sm={1}/>
-                <Grid item xs={12} sm={5}>
-                    <h3>Progress to Total Program Goal</h3>
-                    {/* <ProgramDonut tempCountTotal={tempCountTotal} totalGoal={props.totalGoal} totalPurchased={props.totalPurchased} onHome={false} onDetails={true} /> */}
+    
+                <Grid align="center" item xs={12} sm={5}>
+                    <h4>Progress to Total Program Goal</h4>
+                    <h6>{totalGivers === 1 ? '1 Giver has donated so far' : totalGivers + ' Givers have donated so far'}</h6>
+                    {giverIcons}
                     <ProgramDonut data={dataForChart} />
-
-                    <h4>{totalGivers === 1 ? '1 Giver has donated so far' : totalGivers + ' Givers have donated so far'}</h4>
-                    {/* {giverIcons} */}
                 </Grid>
             </Grid>
 
@@ -279,25 +312,4 @@ const Details = props => {
 
 
 export default Details
-
-// useEffect(() => {
-//     setTotalGiverIcons()
-// }, [totalGivers])
-
-
-
-    // let totalGiverIcons = []
-    // let giverIcons
-    // const setTotalGiverIcons = () => {
-    //     console.log('🎯🎯🎯', totalGivers)
-    //     for (let i = 0; i < totalGivers; i++) {
-    //         totalGiverIcons.push(i)
-    //     }
-    //     console.log('TOTAL GIVER ICONS', totalGiverIcons)
-        
-    //     giverIcons = totalGiverIcons.map((icon, i) => {
-    //         return <FontAwesomeIcon key={i} icon={faUser} />
-    //     }) 
-    
-    // }
   

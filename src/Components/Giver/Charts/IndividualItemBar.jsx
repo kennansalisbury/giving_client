@@ -15,6 +15,34 @@ const IndividualItemBar = props => {
         goal = (data[0].togoal + data[0].num)
         console.log('number', number, 'goal', goal)
       }
+    
+    if(props.dashboard) {
+     
+
+        return(
+            <div>
+                <ComposedChart
+                    layout="vertical"
+                    width={200}
+                    height={100}
+                    data={data}
+                    margin={{
+                    top: 5, right: 5, bottom: 5, left: 5,
+                    }}
+                >
+            
+                    <XAxis type="number" hide={true} />
+                    <YAxis dataKey="name" type="category" hide={true}/>
+                    {/* <Tooltip /> */}
+                    {/* <Legend /> */}
+                    
+                    <Bar dataKey="num" stackId="a" barSize={20} barGap={5} fill="#74b464" />
+                    <Bar dataKey="togoal" stackId="a" barSize={20} fill="#d1e6cb" />
+            
+                </ComposedChart>
+            </div>
+        )
+    }
       
     return (
         <div>
@@ -33,11 +61,11 @@ const IndividualItemBar = props => {
             {/* <Tooltip /> */}
             {/* <Legend /> */}
             
-            <Bar dataKey="num" stackId="a" barSize={20} fill="#413ea0" />
-            <Bar dataKey="togoal" stackId="a" barSize={20} fill="#e2e1f6" />
+            <Bar dataKey="num" stackId="a" barSize={20} fill="#74b464" />
+            <Bar dataKey="togoal" stackId="a" barSize={20} fill="#d1e6cb" />
     
         </ComposedChart>
-        <p>{number}/{goal}</p>
+        <p>{number}/{goal}</p> 
         </div>
     );
   }

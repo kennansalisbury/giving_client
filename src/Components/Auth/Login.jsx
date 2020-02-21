@@ -7,6 +7,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import Grid from '@material-ui/core/Grid'
 import CardContent from '@material-ui/core/CardContent'
+import Logo from "../../static/img/logo_black.png"
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -71,7 +72,7 @@ const Login = props => {
         alignItems = "center"
         spacing = {4}
       >
-            <h1 className="login-cards">The Giving Tree</h1>
+            <div className="login-cards"><img height="auto" width="250px" src={Logo} alt="logo"/></div>
             <Grid item xs={9} sm={6}>
                 <Card className="login-cards">
                     <CardContent align="center" >

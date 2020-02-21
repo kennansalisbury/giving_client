@@ -80,7 +80,7 @@ const GiverContent = props => {
                                     user={props.user} 
                                     updateUser={props.updateUser} 
                                     allPrograms={allPrograms} 
-                                    giverItems={giverItems} 
+                                    giverItems={giverItems}
                             />
                             }
                     /> 

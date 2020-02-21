@@ -12,6 +12,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import {makeStyles} from '@material-ui/core/styles'
 import FormGroup from '@material-ui/core/FormGroup'
+import Logo from "../../static/img/logo_black.png"
 // import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 const useStyles = makeStyles(theme => ({
@@ -126,7 +127,7 @@ const Signup = props => {
             alignItems = "center"
             spacing = {4}
         >
-        <h1 className="login-cards">The Giving Tree</h1>
+        <div className="login-cards"><img height="auto" width="250px" src={Logo} alt="logo"/></div>
         <Grid item xs={8} sm={6}>
             <Card className="login-cards">
                 <CardContent>

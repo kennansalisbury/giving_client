@@ -81,12 +81,12 @@ const ProgramModule = props => {
         <Grid item xs={12} sm={6}>
             {/* <Link className="program-mod-link" to={`/${props.program.id}`}> */}
             <Card className="program-mod-link" onClick={e => props.showDetailsPage(e, props.program, totalGoal, totalPurchased, totalCurrentGiverPurch) }>
-                <CardContent>
-                    <h1>{props.program.name}</h1>
+                <CardContent align="center">
+                    <h2>{props.program.name}</h2>
                     <p>{props.program.description}</p>
-                    <p>Ends: <Moment fromNow>{props.program.endDate}</Moment> </p>
                     <h4>Progress to Goal</h4>
                     <ProgramDonut data={dataForChart} onHome={true} onDetails={false}/>
+                    <p>Ends: <Moment fromNow>{props.program.endDate}</Moment> </p>
                 </CardContent>
             </Card>
             {/* </Link> */}

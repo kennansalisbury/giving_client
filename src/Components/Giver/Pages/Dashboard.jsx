@@ -1,5 +1,13 @@
 import React, {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import NumberFormat from 'react-number-format'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+import Container from '@material-ui/core/Container'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+
+import IndividualItemBar from '../Charts/IndividualItemBar'
 
 const Dashboard = props => {
 
@@ -89,19 +97,73 @@ const Dashboard = props => {
         }  
     })
 
+    let chartData = [
+        {
+            name: 'Program', 
+            num: totalPrograms,
+            togoal: 0
+        },
+        {
+            name: 'Items', 
+            num: totalNumItemsPurchased,
+            togoal: 0
+        },
+        {
+            name: 'Dollars', 
+            num: totalDollarsSpent,
+            togoal: 0
+        }
+    ]
+
     return (
-        <div>
+        <Container>
             {message}
             <h1>Hi, {props.user.firstname}</h1>
-            <h3>Thanks for all you've contributed.</h3>
-            <p>You've helped us reach our goals on {totalPrograms} programs</p>
-            <p>You have donated {totalNumItemsPurchased} items to people in need.</p>
-            <p>That's <NumberFormat thousandSeparator={true} displayType={'text'} value={totalDollarsSpent} prefix={'$'}/> of your dollars that have gone to causes you care about.</p>
-            
-            <h5>Your Top Donated Items:</h5>
-            {topItemsList}
+            <h3>Thanks for all you've contributed!</h3>
+            <Grid
+                container
+                direction="row"
+                justify="space-evenly"
+                align="flex-start"
+            >
+                <Grid item xs={12} sm={5}>
+                    <Card className="dashboard-card">
+                        <CardContent>
+                        <Grid 
+                        container
+                        direction="row"
+                        justify="center"
+                        align="flex-start"
+                    >
+                        <Grid item xs={6} sm={6}>
+                            <h5>{totalPrograms} programs</h5>
+                            {/* <IndividualItemBar data={programData} dashboard={true}/> */}
+                            <h5>{totalNumItemsPurchased} donations</h5>
+                            {/* <IndividualItemBar data={totalItemsData} dashboard={true}/> */}
+                            <h5><NumberFormat thousandSeparator={true} displayType={'text'} value={totalDollarsSpent} prefix={'$'}/> </h5>
+                        </Grid>
+                        <Grid item xs={6} sm={6}>
+                            <IndividualItemBar data={chartData} dashboard={true}/>
+                        </Grid>
+                    </Grid>
+                        </CardContent>
+                    </Card>
+                 
+                  
+                </Grid>
+                <Grid item xs={1}></Grid>
+                <Grid item xs={12} sm={6}>
+                <Card>
+                        <CardContent>
+                            <h5>Your Top Donated Items:</h5>
+                            {topItemsList}
+                        </CardContent>
+                    </Card>
+                </Grid>
 
-        </div>
+            </Grid>
+            <Link to="/"><Button variant="contained">Back to Home</Button></Link>
+        </Container>
     )
     }
 }
