@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid'
 import Login from './Components/Auth/Login'
 import Signup from './Components/Auth/Signup'
 import GiverContent from './Components/Giver/GiverContent'
-import Account from './Components/Giver/Pages/Account'
+import Account from './Components/Giver/Pages/Dashboard'
 
 
 
@@ -58,9 +58,7 @@ function App() {
   }
 
     return (
-      <Switch>
         <GiverContent user={user}  updateUser={updateUser} />
-      </Switch>
     )
 }
 

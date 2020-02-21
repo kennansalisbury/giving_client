@@ -75,7 +75,7 @@ const Navbar = props => {
                 
                     <Divider/>
                     <ListItem className="program-mod-link">
-                        <ListItemText>Account</ListItemText>
+                        <ListItemText>Dashboard</ListItemText>
                     </ListItem>
                 </List>
 

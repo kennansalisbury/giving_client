@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import Home from './Pages/Home'
 import Details from './Pages/Details'
 import Navbar from '../Navbar'
-import Account from './Pages/Account'
+import Dashboard from './Pages/Dashboard'
 import Login from '../Auth/Login'
 import Signup from '../Auth/Signup'
 
@@ -76,7 +76,7 @@ const GiverContent = props => {
 
                     <Route path="/account" 
                             render={() => 
-                                <Account 
+                                <Dashboard 
                                     user={props.user} 
                                     updateUser={props.updateUser} 
                                     allPrograms={allPrograms} 
