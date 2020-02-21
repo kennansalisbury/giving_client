@@ -19,7 +19,7 @@ const ProgramItem = props => {
 
     useEffect(() => {
         formatDataForChart()
-    }, [])
+    }, [props.counts])
 
     const formatDataForChart = (tempCount) => {
         let total=0
