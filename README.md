@@ -1,6 +1,6 @@
 ## The Giving Tree
 
-![logo](./static/img/logo_black.png)
+![logo](./src/static/img/logo_black.png)
 
 An app where users can see view specific donation needs an organization has, directly purchase to donate, and see the impact their contributions have in a tangible way.
 
