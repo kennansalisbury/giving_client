@@ -47,8 +47,8 @@ const Navbar = props => {
         setAnchorEl(null);
       }
 
-    // let homeIcon = <FontAwesomeIcon icon={faHome} color="black" />
-    let homeIcon = <img src={logoIcon} alt="logo-icon" height="30em"/>
+    let homeIcon = <FontAwesomeIcon icon={faHome} color="black" />
+    // let homeIcon = <img src={logoIcon} alt="logo-icon" height="30em"/>
     
     if(props.user.profilePhoto) {
         setProfilePhoto(<img className="profileIcon" src={props.user.profilePhoto} alt="profile-icon"/>)
