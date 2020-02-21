@@ -118,6 +118,15 @@ const Signup = props => {
   
 
     return (
+        <Grid 
+            className="login-background"
+            container 
+            direction ="column"
+            justify = "center"
+            alignItems = "center"
+            spacing = {4}
+        >
+        <h1 className="login-cards">The Giving Tree</h1>
         <Grid item xs={8} sm={6}>
             <Card className="login-cards">
                 <CardContent>
@@ -149,6 +158,9 @@ const Signup = props => {
                 </CardContent>
             </Card>
         </Grid>
+        <a style={{color:"gray", fontSize: "8px"}} href="https://unsplash.com/@davidvig?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" target="_blank" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from David Vig">Photo credit: David Vig on Unsplash</a>
+        </Grid>
+        
     )
 }
 

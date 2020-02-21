@@ -33,9 +33,10 @@ const Navbar = props => {
     }
 
     const handleLogout = (e) => {
-        e.preventDefault()
+        // e.preventDefault()
         localStorage.removeItem('userToken')
         props.updateUser(null)
+        return <Redirect to="/" />
       }
 
     const handleMenu = event => {

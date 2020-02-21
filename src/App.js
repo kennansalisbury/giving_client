@@ -57,47 +57,11 @@ function App() {
     }
   }
 
-  if(user) {
     return (
-      <div>
-        <Route exact path="/" 
-            render={() => 
-                <GiverContent 
-                user={user} 
-                updateUser={updateUser} 
-              />
-            }
-        /> 
-        <Route path="/account" 
-              render={() => 
-                  <Account 
-                      user={user} 
-                      updateUser={updateUser} 
-               
-              />
-              }
-          /> 
-        <Route path={"/signup"} render={() => <Redirect to="/" /> }/>
-      </div>
+      <Switch>
+        <GiverContent user={user}  updateUser={updateUser} />
+      </Switch>
     )
-  } else {
-  return (
-      <Grid 
-        className="login-background"
-        container 
-        direction ="column"
-        justify = "center"
-        alignItems = "center"
-        spacing = {4}
-      >
-        <h1 className="login-cards">The Giving Tree</h1>
-        <Route exact path={"/"} render={() => <Login updateUser={updateUser}/>}/>
-        <Route path={"/signup"} render={() => <Signup updateUser={updateUser} /> }/>
-        <a style={{color:"gray", fontSize: "8px"}} href="https://unsplash.com/@davidvig?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" target="_blank" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from David Vig">Photo credit: David Vig on Unsplash</a>
-      </Grid>
-  )
-}
-
 }
 
 export default App;

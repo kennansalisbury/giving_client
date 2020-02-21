@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react'
-import {Route, Switch} from 'react-router-dom'
+import {Route, Redirect, Switch} from 'react-router-dom'
+import Grid from '@material-ui/core/Grid'
 import Home from './Pages/Home'
 import Details from './Pages/Details'
 import Navbar from '../Navbar'
 import Account from './Pages/Account'
+import Login from '../Auth/Login'
+import Signup from '../Auth/Signup'
 
 const GiverContent = props => {
 
@@ -13,77 +16,92 @@ const GiverContent = props => {
     let [showDetails, setShowDetails] = useState(false)
    
     console.log('show details', showDetails)
-
+  
     useEffect(() => {
         fetchData()
-    }, [showDetails])
+    }, [props.user])
 
-
-    //fetch data, and set state
-    const fetchData = () => {
-       let token = localStorage.getItem('userToken')
-        fetch(`${process.env.REACT_APP_SERVER_URL}/programs/${props.user.id}`,
-           {
-            headers: {
-                'Authorization': `Bearer ${token}`
+        //fetch data, and set state
+        const fetchData = () => {
+            if(props.user) {
+            let token = localStorage.getItem('userToken')
+                fetch(`${process.env.REACT_APP_SERVER_URL}/programs/${props.user.id}`,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(response => {
+                    response.json().then(data => {
+                        if(response.ok) {
+                            setAllPrograms(data[0].programs)
+                            setGiverItems(data[1].giverItems)
+                        } else {
+                            setMessage(`${response.status} ${response.statusText}: ${data.message}`)
+                        }
+                    })
+                })
+                .catch(err => {
+                    console.log(err)
+                })
             }
-        })
-        .then(response => {
-            response.json().then(data => {
-                if(response.ok) {
-                    setAllPrograms(data[0].programs)
-                    setGiverItems(data[1].giverItems)
-                } else {
-                    setMessage(`${response.status} ${response.statusText}: ${data.message}`)
-                }
-            })
-        })
-        .catch(err => {
-            console.log(err)
-        })
-  }
+        }
 
-    if (!allPrograms || !allPrograms.length) {
-        return <div>Loading...
-                        {message}
-        </div>
-    }
 
-    return (
-        <div>
-            <header>
-                <Navbar user={props.user} updateUser={props.updateUser} setShowDetails={setShowDetails} />
-            </header>
-            <main>
+        if(props.user) {
 
-                <Home 
-                    user={props.user} 
-                    updateUser={props.updateUser} 
-                    allPrograms={allPrograms} 
-                    giverItems={giverItems}
-                    setShowDetails={setShowDetails}
-                    showDetails={showDetails}
-                />   
+        if ((!allPrograms || !allPrograms.length)) {
+            return ( <div>Loading...</div>)
+        }
 
-                {/* <Route path="/account" 
-                    render={() => 
-                        <Account 
+        return (
+            <div>
+                <header>
+                    <Navbar user={props.user} updateUser={props.updateUser} setShowDetails={setShowDetails} />
+                </header>
+                <main>
+                <Switch>
+   
+                    <Route exact path="/" render={() => 
+                        <Home 
                             user={props.user} 
                             updateUser={props.updateUser} 
                             allPrograms={allPrograms} 
-                            giverItems={giverItems} 
-                    />
-                    }
-                />  */}
-            </main>
-            {/* <Home 
-                user={props.user} 
-                updateUser={props.updateUser} 
-                allPrograms={allPrograms} 
-                giverItems={giverItems}
-            />     */}
-        </div>
+                            giverItems={giverItems}
+                            setShowDetails={setShowDetails}
+                            showDetails={showDetails}
+                        />  
+                        }
+                    /> 
+
+                    <Route path="/account" 
+                            render={() => 
+                                <Account 
+                                    user={props.user} 
+                                    updateUser={props.updateUser} 
+                                    allPrograms={allPrograms} 
+                                    giverItems={giverItems} 
+                            />
+                            }
+                    /> 
+
+                    
+                    {/* <Route render={() => <Redirect to="/"/>}/> */}
+                </Switch>
+                </main>
+            </div>
+        )
+
+    }
+   
+    return (
+        <Switch>
+            <Route exact path={"/"} render={() => <Login updateUser={props.updateUser}/>}/>
+            <Route path={"/signup"} render={() => <Signup updateUser={props.updateUser} /> }/>
+            {/* <Route render={() => <Redirect to="/"/>}/> */}
+        </Switch>
     )
+
 
 }
 
