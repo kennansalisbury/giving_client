@@ -22,8 +22,13 @@ const GiverContent = props => {
 
     //fetch data, and set state
     const fetchData = () => {
-       console.log(`Fetching data at ${process.env.REACT_APP_SERVER_URL}/programs/${props.user.id}`)
-        fetch(`${process.env.REACT_APP_SERVER_URL}/programs/${props.user.id}`)
+       let token = localStorage.getItem('userToken')
+        fetch(`${process.env.REACT_APP_SERVER_URL}/programs/${props.user.id}`,
+           {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
         .then(response => {
             response.json().then(data => {
                 if(response.ok) {

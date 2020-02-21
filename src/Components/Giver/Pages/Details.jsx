@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import {Redirect} from 'react-router-dom'
+import {Redirect, Link} from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import {PayPalButton} from 'react-paypal-button-v2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 
 
 import ProgramItem from '../ProgramItem'
@@ -106,6 +106,14 @@ const Details = props => {
         setItemsInCart([])
         setShowCart(false)
         initCounts()
+        setDataForChart([{
+            "name": "Items Needed",
+            "value": (props.totalGoal - props.totalPurchased)
+        },
+        {
+            "name": "Items Donated to Date",
+            "value": props.totalPurchased
+        }])
     }
 
     //once paypal payment complete, post to database and render confirmation page
@@ -129,14 +137,14 @@ const Details = props => {
         )
 
         data.forEach(item => {
-       
+            let token = localStorage.getItem('userToken')
             //fetch to giveritems post route
             fetch(`${process.env.REACT_APP_SERVER_URL}/items/giver`, {
                 method: 'POST',
                 body: JSON.stringify(item),
                 headers: {
-                    'Content-Type': 'application/json'
-                    // 'Authorization': `Bearer ${token}`
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 }
             })
             .then(response => response.json()
@@ -179,6 +187,7 @@ const Details = props => {
         return (
            
            <Container>
+                    <FontAwesomeIcon icon={faAngleLeft} color="black" size="lg" onClick={e => updateCart(e)} className="program-mod-link"/>
                     <h1>{props.program.name}</h1>
                     <h3>Your Cart</h3>
                     {totalCost > 0 ? <p>Total Cost: ${totalCost} </p> : <p>You have no items in your cart yet</p>}    
@@ -237,6 +246,7 @@ const Details = props => {
 
     return (
         <Container>
+            <FontAwesomeIcon icon={faAngleLeft} color="black" size="lg" onClick={e => props.setShowDetails(false)} className="program-mod-link"/>
             <h1>{props.program.name}</h1>
             <Grid container
                 direction="row"
@@ -258,7 +268,7 @@ const Details = props => {
                     {/* <ProgramDonut tempCountTotal={tempCountTotal} totalGoal={props.totalGoal} totalPurchased={props.totalPurchased} onHome={false} onDetails={true} /> */}
                     <ProgramDonut data={dataForChart} />
 
-                    <h4>{totalGivers} Givers have donated so far</h4>
+                    <h4>{totalGivers === 1 ? '1 Giver has donated so far' : totalGivers + ' Givers have donated so far'}</h4>
                     {/* {giverIcons} */}
                 </Grid>
             </Grid>

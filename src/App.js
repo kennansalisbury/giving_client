@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import jwtDecode from 'jwt-decode'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 
 import './App.css';
 import Grid from '@material-ui/core/Grid'
@@ -67,6 +67,7 @@ function App() {
               />
             }
         /> 
+        <Route path={"/signup"} render={() => <Redirect to="/" /> }/>
 
       </div>
     )

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -67,6 +67,7 @@ const Signup = props => {
                 //if response.ok = true, updateUser(result.token)
                 if(response.ok) {
                     props.updateUser(result.token)
+
                 } else {
                     //else show the error in a message on the page
                     setMessage(`${response.status} ${response.statusText}: ${result.message}`)
@@ -110,6 +111,10 @@ const Signup = props => {
         </div>
     }
 
+    if (props.user) {
+        
+        return <Redirect to="/" />
+    }
   
 
     return (
