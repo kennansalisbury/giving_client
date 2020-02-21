@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid'
 import Login from './Components/Auth/Login'
 import Signup from './Components/Auth/Signup'
 import GiverContent from './Components/Giver/GiverContent'
+import Account from './Components/Giver/Pages/Account'
 
 
 
@@ -67,8 +68,16 @@ function App() {
               />
             }
         /> 
+        <Route path="/account" 
+              render={() => 
+                  <Account 
+                      user={user} 
+                      updateUser={updateUser} 
+               
+              />
+              }
+          /> 
         <Route path={"/signup"} render={() => <Redirect to="/" /> }/>
-
       </div>
     )
   } else {

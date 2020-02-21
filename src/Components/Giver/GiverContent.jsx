@@ -3,10 +3,9 @@ import {Route, Switch} from 'react-router-dom'
 import Home from './Pages/Home'
 import Details from './Pages/Details'
 import Navbar from '../Navbar'
+import Account from './Pages/Account'
 
 const GiverContent = props => {
-
-
 
     let [allPrograms, setAllPrograms] = useState([])
     let [giverItems, setGiverItems] = useState([])
@@ -65,6 +64,17 @@ const GiverContent = props => {
                     setShowDetails={setShowDetails}
                     showDetails={showDetails}
                 />   
+
+                {/* <Route path="/account" 
+                    render={() => 
+                        <Account 
+                            user={props.user} 
+                            updateUser={props.updateUser} 
+                            allPrograms={allPrograms} 
+                            giverItems={giverItems} 
+                    />
+                    }
+                />  */}
             </main>
             {/* <Home 
                 user={props.user} 
