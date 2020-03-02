@@ -4,6 +4,8 @@
 
 An app where users can see view specific donation needs an organization has, directly purchase to donate, and see the impact their contributions have in a tangible way.
 
+Click [HERE](https://giving-tree-app.herokuapp.com/) for deployed app.
+
 ### Technologies used
 Backend: Node.js/Express & SQL/PosgtreSQL/Sequelize 
 Frontend: React, MaterialUI, Recharts
