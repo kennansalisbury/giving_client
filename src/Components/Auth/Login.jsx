@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Link, Redirect} from 'react-router-dom'
+import {Link, Redirect, useParams} from 'react-router-dom'
 import TextField from '@material-ui/core/TextField'
 import FormControl from '@material-ui/core/FormControl'
 import Button from '@material-ui/core/Button'
@@ -21,6 +21,8 @@ const useStyles = makeStyles(theme => ({
 
 const Login = props => {
     
+    let {id} = useParams()
+
     const classes = useStyles();
 
 
@@ -31,6 +33,7 @@ const Login = props => {
     
     const handleSubmit = (e) => {
         e.preventDefault()
+        
         
         //data to post to login
         let data = {
@@ -79,9 +82,9 @@ const Login = props => {
                         <h5>Login</h5>
                         <form className={classes.root} onSubmit={handleSubmit}>
                             <FormControl>
-                                <TextField required  label="Email"  size="small" onChange={e => setEmail(e.currentTarget.value)}/>
-                                <TextField required type="password" label="Password" size="small" onChange={e => setPassword(e.currentTarget.value)}/>
-                                <Button type="submit" variant="contained" size="small">Submit</Button>
+                                <TextField required  label="Email"  size="small" value={id ? "motherteresa@gmail.com" : '' } onChange={e => setEmail(e.currentTarget.value)}/>
+                                <TextField required type="password" label="Password" size="small" value={id ? "password" : '' } onChange={e => setPassword(e.currentTarget.value)}/>
+                                <Button type="submit" variant="contained" value={id ? "password" : ''} size="small">Submit</Button>
                             </FormControl>
                         </form>
                         <p>{message}</p>
