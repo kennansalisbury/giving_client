@@ -82,9 +82,11 @@ const Login = props => {
                         <h5>Login</h5>
                         <form className={classes.root} onSubmit={handleSubmit}>
                             <FormControl>
-                                <TextField required  label="Email"  size="small" value={id ? "motherteresa@gmail.com" : '' } onChange={e => setEmail(e.currentTarget.value)}/>
-                                <TextField required type="password" label="Password" size="small" value={id ? "password" : '' } onChange={e => setPassword(e.currentTarget.value)}/>
-                                <Button type="submit" variant="contained" value={id ? "password" : ''} size="small">Submit</Button>
+                                {/* <TextField required  label="Email"  size="small" value={id ? "motherteresa@gmail.com" : '' } onChange={e => setEmail(e.currentTarget.value)}/>
+                                <TextField required type="password" label="Password" size="small" value={id ? "password" : '' } onChange={e => setPassword(e.currentTarget.value)}/> */}
+                                <TextField required  label="Email"  size="small" onChange={e => setEmail(e.currentTarget.value)}/>
+                                <TextField required type="password" label="Password" size="small" onChange={e => setPassword(e.currentTarget.value)}/>
+                                <Button type="submit" variant="contained" size="small">Submit</Button>
                             </FormControl>
                         </form>
                         <p>{message}</p>
