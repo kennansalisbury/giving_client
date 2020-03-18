@@ -27,8 +27,8 @@ const Login = props => {
 
 
     //set hooks for login form
-    let [email, setEmail] = useState('')
-    let [password, setPassword] = useState('')
+    let [email, setEmail] = useState('motherteresa@gmail.com')
+    let [password, setPassword] = useState('password')
     let [message, setMessage] = useState('')
     
     const handleSubmit = (e) => {
@@ -66,6 +66,11 @@ const Login = props => {
         })
     }
     
+    if(props.user) {
+        return <Redirect to="/" />
+    }
+
+    
     return (
         <Grid 
         className="login-background"
@@ -82,10 +87,10 @@ const Login = props => {
                         <h5>Login</h5>
                         <form className={classes.root} onSubmit={handleSubmit}>
                             <FormControl>
-                                {/* <TextField required  label="Email"  size="small" value={id ? "motherteresa@gmail.com" : '' } onChange={e => setEmail(e.currentTarget.value)}/>
-                                <TextField required type="password" label="Password" size="small" value={id ? "password" : '' } onChange={e => setPassword(e.currentTarget.value)}/> */}
-                                <TextField required  label="Email"  size="small" onChange={e => setEmail(e.currentTarget.value)}/>
-                                <TextField required type="password" label="Password" size="small" onChange={e => setPassword(e.currentTarget.value)}/>
+                                <TextField required  label="Email"  size="small" defaultValue={id ? "motherteresa@gmail.com" : '' } onChange={e => setEmail(e.currentTarget.value)}/>
+                                <TextField required type="password" label="Password" size="small" defaultValue={id ? "password" : '' } onChange={e => setPassword(e.currentTarget.value)}/>
+                                {/* <TextField required  label="Email"  size="small" onChange={e => setEmail(e.currentTarget.value)}/>
+                                <TextField required type="password" label="Password" size="small" onChange={e => setPassword(e.currentTarget.value)}/> */}
                                 <Button type="submit" variant="contained" size="small">Submit</Button>
                             </FormControl>
                         </form>

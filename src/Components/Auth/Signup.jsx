@@ -68,7 +68,7 @@ const Signup = props => {
                 //if response.ok = true, updateUser(result.token)
                 if(response.ok) {
                     props.updateUser(result.token)
-
+                    // return <Redirect to="/" />
                 } else {
                     //else show the error in a message on the page
                     setMessage(`${response.status} ${response.statusText}: ${result.message}`)
@@ -113,10 +113,10 @@ const Signup = props => {
     }
 
     if (props.user) {
-        
         return <Redirect to="/" />
     }
   
+    console.log('USER', props.user)
 
     return (
         <Grid 

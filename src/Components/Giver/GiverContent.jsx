@@ -85,6 +85,9 @@ const GiverContent = props => {
                             }
                     /> 
 
+                    <Route path={"/signup"} render={() => <Signup user={props.user} /> }/>
+                    <Route path={"/login/:id"} render={() => <Login user={props.user}/>}/>
+
                     
                     {/* <Route render={() => <Redirect to="/"/>}/> */}
                 </Switch>
