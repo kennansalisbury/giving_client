@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import {Route, Redirect, Switch} from 'react-router-dom'
-import Grid from '@material-ui/core/Grid'
+import {Route, Switch, Redirect} from 'react-router-dom'
 import Home from './Pages/Home'
-import Details from './Pages/Details'
 import Navbar from '../Navbar'
 import Dashboard from './Pages/Dashboard'
 import Login from '../Auth/Login'
@@ -15,7 +13,7 @@ const GiverContent = props => {
     let [message, setMessage] = useState([])
     let [showDetails, setShowDetails] = useState(false)
    
-    console.log('show details', showDetails)
+    console.log('user', props.user)
   
     useEffect(() => {
         fetchData()
@@ -47,8 +45,14 @@ const GiverContent = props => {
             }
         }
 
+        if(!props.user) {
+            console.log(!props.user, 'no user', props.user)
+            return <Redirect to="/login" />
+        }
 
         if(props.user) {
+            console.log('there is a user')
+        }
 
         if ((!allPrograms || !allPrograms.length)) {
             return ( <div>Loading...</div>)
@@ -62,7 +66,7 @@ const GiverContent = props => {
                 <main>
                 <Switch>
    
-                    <Route exact path="/" render={() => 
+                    {/* <Route exact path="/" render={() =>  */}
                         <Home 
                             user={props.user} 
                             updateUser={props.updateUser} 
@@ -71,8 +75,8 @@ const GiverContent = props => {
                             setShowDetails={setShowDetails}
                             showDetails={showDetails}
                         />  
-                        }
-                    /> 
+                        {/* }
+                    />  */}
 
                     <Route path="/account" 
                             render={() => 
@@ -84,27 +88,26 @@ const GiverContent = props => {
                             />
                             }
                     /> 
-
+{/* 
                     <Route path={"/signup"} render={() => <Signup user={props.user} /> }/>
                     <Route path={"/login/:id"} render={() => <Login user={props.user}/>}/>
 
-                    
+                     */}
                     {/* <Route render={() => <Redirect to="/"/>}/> */}
                 </Switch>
                 </main>
             </div>
         )
 
-    }
+    
    
-    return (
-        <Switch>
-            <Route exact path={"/"} render={() => <Login updateUser={props.updateUser}/>}/>
-            <Route path={"/login/:id"} render={() => <Login updateUser={props.updateUser}/>}/>
-            <Route path={"/signup"} render={() => <Signup updateUser={props.updateUser} /> }/>
-            {/* <Route render={() => <Redirect to="/"/>}/> */}
-        </Switch>
-    )
+    // return (
+    //     <Switch>
+    //         <Route exact path={"/"} render={() => <Login updateUser={props.updateUser}/>}/>
+    //         <Route path={"/login/:id"} render={() => <Login updateUser={props.updateUser}/>}/>
+    //         <Route path={"/signup"} render={() => <Signup updateUser={props.updateUser} /> }/>
+    //     </Switch>
+    // )
 
 
 }

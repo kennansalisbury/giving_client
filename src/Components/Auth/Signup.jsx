@@ -13,19 +13,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import {makeStyles} from '@material-ui/core/styles'
 import FormGroup from '@material-ui/core/FormGroup'
 import Logo from "../../static/img/logo_black.png"
-// import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
-
-const useStyles = makeStyles(theme => ({
-    formControl: {
-      margin: theme.spacing(3),
-    },
-    root: {
-        '& .MuiTextField-root': {
-          margin: theme.spacing(1),
-          width: "95%",
-        }
-    }
-  }));
 
 
 const Signup = props => {
@@ -83,10 +70,8 @@ const Signup = props => {
     const handleRadioSelect = (e) => {
         setDonorOrOrgSelected(e.target.value)
         if(e.target.value === 'donor') {
-            console.log('donor is true')
             setIsDonor(true)
         } else {
-            console.log('donor is false')
             setIsDonor(false)
         }
     }
@@ -115,8 +100,6 @@ const Signup = props => {
     if (props.user) {
         return <Redirect to="/" />
     }
-  
-    console.log('USER', props.user)
 
     return (
         <Grid 
@@ -155,7 +138,7 @@ const Signup = props => {
                     </form>
                     <br/>
 
-                    <p>Already have an account with us?</p><Link to="/">Login Here</Link>
+                    <p>Already have an account with us?</p><Link to="/login">Login Here</Link>
                 </CardContent>
             </Card>
         </Grid>
@@ -164,5 +147,17 @@ const Signup = props => {
         
     )
 }
+
+const useStyles = makeStyles(theme => ({
+    formControl: {
+      margin: theme.spacing(3),
+    },
+    root: {
+        '& .MuiTextField-root': {
+          margin: theme.spacing(1),
+          width: "95%",
+        }
+    }
+  }));
 
 export default Signup

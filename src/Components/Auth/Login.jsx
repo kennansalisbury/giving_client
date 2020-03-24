@@ -9,18 +9,6 @@ import Grid from '@material-ui/core/Grid'
 import CardContent from '@material-ui/core/CardContent'
 import Logo from "../../static/img/logo_black.png"
 
-//material ui theme styles
-const useStyles = makeStyles(theme => ({
-    root: {
-      '& .MuiTextField-root': {
-        margin: theme.spacing(1),
-        width: 200,
-      }
-    },
-  }));
-
-
-//
 const Login = props => {
     const classes = useStyles();
 
@@ -29,8 +17,14 @@ const Login = props => {
     let [password, setPassword] = useState('password')
     let [message, setMessage] = useState('')
     
+    //if there is a user, redirect to home
+    if(props.user) {
+        return <Redirect to="/" />
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
+        
         
         //data to post to login route
         let data = {
@@ -49,7 +43,7 @@ const Login = props => {
         .then(response => {
             response.json()
             .then(result => {
-                //if response.ok = true, updateUser(result.token)
+                //if response.ok = true, update the user stored in app level state to the token sent back from the post route
                 if(response.ok) {
                     props.updateUser(result.token)
                 } else {
@@ -62,12 +56,7 @@ const Login = props => {
             console.log(err)
         })
     }
-    
-    if(props.user) {
-        return <Redirect to="/" />
-    }
 
-    
     return (
         <Grid 
         className="login-background"
@@ -100,5 +89,16 @@ const Login = props => {
         
     )
 }
+
+//material ui theme styles
+const useStyles = makeStyles(theme => ({
+    root: {
+      '& .MuiTextField-root': {
+        margin: theme.spacing(1),
+        width: 200,
+      }
+    },
+  }));
+
 
 export default Login

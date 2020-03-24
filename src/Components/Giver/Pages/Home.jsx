@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Route} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 import ProgramModule from '../ProgramModule'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
@@ -7,9 +7,6 @@ import Grid from '@material-ui/core/Grid'
 import Details from './Details'
 
 const Home = props => {
-    
-    // console.log('home, show details', props.showDetails)
-    // let [showDetails, setShowDetails] = useState(false)
     let [totalGoal, setTotalGoal] = useState(0)
     let [totalPurchased, setTotalPurchased] = useState(0)
     let [totalCurrentGiverPurch, setTotalCurrentGiverPurch] = useState(0)
@@ -26,6 +23,10 @@ const Home = props => {
     }
 
 
+    if(!props.user) {
+        console.log('no user, redirect')
+        return <Redirect to="/login" />
+    }
 
     if(props.showDetails) {
         return(

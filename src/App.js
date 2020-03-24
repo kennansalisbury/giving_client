@@ -1,26 +1,21 @@
 import React, {useState, useEffect} from 'react'
 import jwtDecode from 'jwt-decode'
-import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
-
-import './App.css';
-import Grid from '@material-ui/core/Grid'
-
+import './App.css'
+import {Route, Switch, Redirect} from 'react-router-dom'
+import GiverContent from './Components/Giver/GiverContent'
 import Login from './Components/Auth/Login'
 import Signup from './Components/Auth/Signup'
-import GiverContent from './Components/Giver/GiverContent'
-import Account from './Components/Giver/Pages/Dashboard'
-
-
 
 
 function App() {
 
-  // Hooks 
+  // State 
   let [user, setUser] = useState(null)
   
   //Check for token on load
   useEffect(() => {
-    decodeToken(null)
+    console.log('decode token on load')
+    decodeToken()
   }, [])
 
   //Decode token function
@@ -38,6 +33,7 @@ function App() {
         setUser(null)
       } else {
         setUser(decoded)
+        console.log('setting user', decoded)
       }
     //if token does not exist, set user to null
     } else {
@@ -56,10 +52,17 @@ function App() {
       setUser(null)
     }
   }
+ 
+    console.log('rendering app', user)
 
     return (
-        <GiverContent user={user}  updateUser={updateUser} />
+      <Switch>
+          <Route path="/signup" render={() => <Signup user={user} updateUser={updateUser} /> }/>
+          <Route path="/login" render={() => <Login user={user} updateUser={updateUser}/>}/>
+          <Route path="/" render={() =>  <GiverContent user={user} updateUser={updateUser} /> } />
+      </Switch>
     )
+
 }
 
 export default App;
