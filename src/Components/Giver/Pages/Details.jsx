@@ -179,9 +179,9 @@ const Details = props => {
         return <PurchaseConfirm user={props.user} program={props.program} totalCost={totalCost} orderId={orderId} itemsPurchased={itemsPurchased} setShowDetails={props.setShowDetails}/>
     }
 
-    let itemsList = props.program.programItems.map((item, i) => {
+    let itemsList = props.program.programItems.map((item) => {
 
-        return <ProgramItem key={i} tempTotalCounts={tempTotalCounts} cartShowing={showCart} item={item} counts={counts} setCounts={setCounts} userId={props.user.id} />
+        return <ProgramItem key={item.id} tempTotalCounts={tempTotalCounts} cartShowing={showCart} item={item} counts={counts} setCounts={setCounts} userId={props.user.id} />
             
     })
 
@@ -302,7 +302,7 @@ const Details = props => {
                     <h4>Progress to Total Program Goal</h4>
                     <h6>{totalGivers === 1 ? '1 Giver has donated so far' : totalGivers + ' Givers have donated so far'}</h6>
                     {giverIcons}
-                    <ProgramDonut data={dataForChart} />
+                    <ProgramDonut data={dataForChart} onDetails={true}/>
                 </Grid>
             </Grid>
 

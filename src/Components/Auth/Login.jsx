@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid'
 import CardContent from '@material-ui/core/CardContent'
 import Logo from "../../static/img/logo_black.png"
 
+//material ui theme styles
 const useStyles = makeStyles(theme => ({
     root: {
       '& .MuiTextField-root': {
@@ -19,12 +20,9 @@ const useStyles = makeStyles(theme => ({
   }));
 
 
+//
 const Login = props => {
-    
-    let {id} = useParams()
-
     const classes = useStyles();
-
 
     //set hooks for login form
     let [email, setEmail] = useState('motherteresa@gmail.com')
@@ -34,8 +32,7 @@ const Login = props => {
     const handleSubmit = (e) => {
         e.preventDefault()
         
-        
-        //data to post to login
+        //data to post to login route
         let data = {
             email,
             password
@@ -87,10 +84,8 @@ const Login = props => {
                         <h5>Login</h5>
                         <form className={classes.root} onSubmit={handleSubmit}>
                             <FormControl>
-                                <TextField required  label="Email"  size="small" defaultValue={id ? "motherteresa@gmail.com" : '' } onChange={e => setEmail(e.currentTarget.value)}/>
-                                <TextField required type="password" label="Password" size="small" defaultValue={id ? "password" : '' } onChange={e => setPassword(e.currentTarget.value)}/>
-                                {/* <TextField required  label="Email"  size="small" onChange={e => setEmail(e.currentTarget.value)}/>
-                                <TextField required type="password" label="Password" size="small" onChange={e => setPassword(e.currentTarget.value)}/> */}
+                                <TextField required  label="Email"  size="small" value={email} onChange={e => setEmail(e.currentTarget.value)}/>
+                                <TextField required type="password" label="Password" size="small" value={password} onChange={e => setPassword(e.currentTarget.value)}/>
                                 <Button type="submit" variant="contained" size="small">Submit</Button>
                             </FormControl>
                         </form>

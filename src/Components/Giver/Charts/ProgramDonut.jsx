@@ -61,7 +61,9 @@ const ProgramDonut = props => {
                         data.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.name == "Items Needed" ? "#d1e6cb" : "#74b464"} />)
                     }
                 </Pie>
+            
                 {props.onDetails ? tooltip : ''}
+                {/* {props.onDetails && tooltip} -- another option, but I feel is less intuitive from a readability perspective */}
                 
             </PieChart>
 

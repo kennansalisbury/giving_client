@@ -41,10 +41,11 @@ const Home = props => {
         )
     }
    
-    let allPrograms = props.allPrograms.map((program, i) => {
-    
+    // let allPrograms = props.allPrograms.map((program, i) => {
+    let allPrograms = props.allPrograms.map((program) => {
         return <ProgramModule 
-                    key={i} 
+                    // key={i} 
+                    key={program.id}
                     program={program}
                     giverItems={props.giverItems}   
                     showDetailsPage={showDetailsPage}                        
