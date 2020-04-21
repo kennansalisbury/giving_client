@@ -46,12 +46,12 @@ const GiverContent = props => {
         }
 
         if(!props.user) {
-            console.log(!props.user, 'no user', props.user)
+            // console.log(!props.user, 'no user', props.user)
             return <Redirect to="/login" />
         }
 
         if(props.user) {
-            console.log('there is a user')
+            // console.log('there is a user')
         }
 
         if ((!allPrograms || !allPrograms.length)) {

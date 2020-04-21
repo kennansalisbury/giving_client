@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import jwtDecode from 'jwt-decode'
 import './App.css'
-import {Route, Switch, Redirect} from 'react-router-dom'
+import { BrowserRouter as Router, Route} from 'react-router-dom'
 import GiverContent from './Components/Giver/GiverContent'
 import Login from './Components/Auth/Login'
 import Signup from './Components/Auth/Signup'
@@ -53,11 +53,13 @@ function App() {
 
 
     return (
-      <Switch>
-          <Route path="/signup" render={() => <Signup user={user} updateUser={updateUser} /> }/>
-          <Route path="/login" render={() => <Login user={user} updateUser={updateUser}/>}/>
-          <Route path="/" render={() =>  <GiverContent user={user} updateUser={updateUser} /> } />
-      </Switch>
+      <Router>
+        <div>
+            <Route path="/signup" render={() => <Signup user={user} updateUser={updateUser} /> }/>
+            <Route path="/login" render={() => <Login user={user} updateUser={updateUser}/>}/>
+            <Route exact path="/" render={user ? () =>  <GiverContent user={user} updateUser={updateUser} /> : () => <Login user={user} updateUser={updateUser} /> } />
+        </div>
+      </Router>
     )
 
 }
