@@ -14,7 +14,6 @@ function App() {
   
   //Check for token on load
   useEffect(() => {
-    console.log('decode token on load')
     decodeToken()
   }, [])
 
@@ -33,7 +32,6 @@ function App() {
         setUser(null)
       } else {
         setUser(decoded)
-        console.log('setting user', decoded)
       }
     //if token does not exist, set user to null
     } else {
@@ -52,8 +50,7 @@ function App() {
       setUser(null)
     }
   }
- 
-    console.log('rendering app', user)
+
 
     return (
       <Switch>
