@@ -12,6 +12,17 @@ function App() {
   // State 
   let [user, setUser] = useState(null)
   
+  //Ping server on load
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_SERVER_URL}`)
+    .then(response => {
+      console.log(response)
+    })
+    .catch(err => {
+        console.log(err)
+    }) 
+  }, [])
+
   //Check for token on load
   useEffect(() => {
     decodeToken()
