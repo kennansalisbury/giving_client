@@ -13,7 +13,7 @@ const GiverContent = props => {
     let [message, setMessage] = useState([])
     let [showDetails, setShowDetails] = useState(false)
    
-    console.log('user', props.user)
+    // console.log('user', props.user)
   
     useEffect(() => {
         fetchData()
