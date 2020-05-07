@@ -4,7 +4,7 @@ import IndividualItemBar from './Charts/IndividualItemBar'
 import { Grid } from '@material-ui/core'
 
 const ProgramItem = props => {
-    console.log(props)
+    // console.log(props)
 
 
     let [totalItemPurchased, setTotalItemPurchased] = useState(0)
@@ -33,7 +33,7 @@ const ProgramItem = props => {
         else {
             currentNum= total
         }
-        console.log('CURRENT NUM', currentNum)
+        // console.log('CURRENT NUM', currentNum)
 
         let data = [
             {
@@ -54,7 +54,7 @@ const ProgramItem = props => {
 
         props.counts[props.item.id] = tempCount
         props.setCounts(props.counts)
-        console.log('COUNTS',props.counts)
+        // console.log('COUNTS',props.counts)
         props.tempTotalCounts(props.counts)
         
 

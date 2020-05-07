@@ -13,7 +13,6 @@ const IndividualItemBar = props => {
       if(data.length) {
         number = data[0].num
         goal = (data[0].togoal + data[0].num)
-        console.log('number', number, 'goal', goal)
       }
     
     if(props.dashboard) {

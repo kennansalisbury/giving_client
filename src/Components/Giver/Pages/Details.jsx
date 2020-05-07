@@ -98,7 +98,7 @@ const Details = props => {
             setTotalCost(total.toFixed(2)) 
             let cart = props.program.programItems.filter(item => counts[item.id] > 0)  
             setItemsInCart(cart)
-            console.log('CART ITEMS:', itemsInCart )
+            // console.log('CART ITEMS:', itemsInCart )
             setShowCart(true) 
         }
     }
@@ -217,7 +217,7 @@ const Details = props => {
                             <PayPalButton
                                 amount={totalCost}
                                 onSuccess={(details) => {
-                                    console.log(details)
+                                    // console.log(details)
                                     setOrderId(details.id)
                                     handleSubmit()
                                 }}

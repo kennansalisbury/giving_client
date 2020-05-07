@@ -20,9 +20,6 @@ const ProgramDonut = props => {
     }
 
     const renderTooltip = (entry) => {
-        
-        // console.log(entry)
-
 
         if(entry.payload.length) {
 

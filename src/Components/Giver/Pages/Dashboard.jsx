@@ -35,14 +35,12 @@ const Dashboard = props => {
             setTotalNumItemsPurchased(totalPurchased)
             let totalDollars = giverItems.reduce((total, item) => total += item.dollars_spent, 0)
             setTotalDollarsSpent(totalDollars)
-            console.log('TOTAL DOLLARS', totalDollars)
             let programs = {}
             giverItems.forEach(item => {
                 programs[item.program] = 1
             })
             setPrograms(Object.keys(programs))
             setTotalPrograms(Object.keys(programs).length)
-            console.log(Object.keys(programs).length)
         }
     }, [giverItems])
 
@@ -60,7 +58,7 @@ const Dashboard = props => {
                     .then(response => {
                         response.json().then(results => {
                             if(response.ok) {
-                                console.log('🌈🌈results RECEIVED🌈🌈', results)
+                                // console.log('🌈🌈results RECEIVED🌈🌈', results)
                                 let data = results.map(item => {
                                         return ({
                                             name: item.programItem.name,
@@ -81,8 +79,6 @@ const Dashboard = props => {
                     })
                 }
             }
-
-    console.log(giverItems)
     
     if(!giverItems || !totalPrograms) {
         return (<div>Loading...</div>)

@@ -24,7 +24,6 @@ const Home = props => {
 
 
     if(!props.user) {
-        console.log('no user, redirect')
         return <Redirect to="/login" />
     }
 
