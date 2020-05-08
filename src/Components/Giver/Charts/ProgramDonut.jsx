@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
+import React from 'react'
+import { PieChart, Pie, Cell, Tooltip } from 'recharts'
 
 
 const ProgramDonut = props => {
@@ -55,7 +55,7 @@ const ProgramDonut = props => {
                     fill="#74b464" 
                 >
                     {
-                        data.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.name == "Items Needed" ? "#d1e6cb" : "#74b464"} />)
+                        data.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.name === "Items Needed" ? "#d1e6cb" : "#74b464"} />)
                     }
                 </Pie>
             

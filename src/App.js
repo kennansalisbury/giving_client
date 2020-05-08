@@ -65,7 +65,8 @@ function App() {
         <div>
             <Route path="/signup" render={() => <Signup user={user} updateUser={updateUser} /> }/>
             <Route path="/login" render={() => <Login user={user} updateUser={updateUser}/>}/>
-            <Route exact path="/" render={user ? () =>  <GiverContent user={user} updateUser={updateUser} /> : () => <Login user={user} updateUser={updateUser} /> } />
+            <Route exact path="/" render={user ? () =>  <GiverContent user={user} updateUser={updateUser} display={'home'} /> : () => <Login user={user} updateUser={updateUser} /> } />
+            <Route path="/account" render={user ? () =>  <GiverContent user={user} updateUser={updateUser} display={'dashboard'} /> : () => <Login user={user} updateUser={updateUser} /> } />
         </div>
       </Router>
     )

@@ -1,5 +1,5 @@
 import React from 'react'
-import {BarChart, ComposedChart, XAxis, YAxis, Tooltip, Bar, ResponsiveContainer, Legend, CartesianGrid, Area, Line} from 'recharts'
+import {ComposedChart, XAxis, YAxis, Bar} from 'recharts'
 
 const IndividualItemBar = props => {
     let data

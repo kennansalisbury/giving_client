@@ -6,7 +6,6 @@ import CardContent from '@material-ui/core/CardContent'
 import Moment from 'react-moment'
 
 import ProgramDonut from './Charts/ProgramDonut'
-import Details from './Pages/Details'
 
 const ProgramModule = props => {
     

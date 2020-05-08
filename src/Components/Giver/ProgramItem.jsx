@@ -7,15 +7,15 @@ const ProgramItem = props => {
     // console.log(props)
 
 
-    let [totalItemPurchased, setTotalItemPurchased] = useState(0)
-    let [tempCounts, setTempCounts] = useState(0)
+    // let [totalItemPurchased, setTotalItemPurchased] = useState(0)
+    // let [tempCounts, setTempCounts] = useState(0)
     let [dataForChart, setDataForChart] = useState([])
 
-    const getTotalItemPurchased = () => {
-        let total=0
-        props.item.giverItems.forEach(item => total += item.num_purchased)
-        setTotalItemPurchased(total)
-    }
+    // const getTotalItemPurchased = () => {
+    //     let total=0
+    //     props.item.giverItems.forEach(item => total += item.num_purchased)
+    //     setTotalItemPurchased(total)
+    // }
 
     useEffect(() => {
         formatDataForChart()
@@ -24,7 +24,7 @@ const ProgramItem = props => {
     const formatDataForChart = (tempCount) => {
         let total=0
         props.item.giverItems.forEach(item => total += item.num_purchased)
-        setTotalItemPurchased(total)
+        // setTotalItemPurchased(total)
         
         let currentNum
         if(tempCount){

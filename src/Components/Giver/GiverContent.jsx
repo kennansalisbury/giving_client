@@ -1,16 +1,14 @@
 import React, {useState, useEffect} from 'react'
-import {Route, Switch, Redirect} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 import Home from './Pages/Home'
 import Navbar from '../Navbar'
 import Dashboard from './Pages/Dashboard'
-import Login from '../Auth/Login'
-import Signup from '../Auth/Signup'
 
 const GiverContent = props => {
 
     let [allPrograms, setAllPrograms] = useState([])
     let [giverItems, setGiverItems] = useState([])
-    let [message, setMessage] = useState([])
+    let [message, setMessage] = useState('')
     let [showDetails, setShowDetails] = useState(false)
    
     // console.log('user', props.user)
@@ -50,10 +48,6 @@ const GiverContent = props => {
             return <Redirect to="/login" />
         }
 
-        if(props.user) {
-            // console.log('there is a user')
-        }
-
         if ((!allPrograms || !allPrograms.length)) {
             return ( <div>Loading...</div>)
         }
@@ -64,9 +58,8 @@ const GiverContent = props => {
                     <Navbar user={props.user} updateUser={props.updateUser} setShowDetails={setShowDetails} />
                 </header>
                 <main>
-                <Switch>
-   
-                    {/* <Route exact path="/" render={() =>  */}
+                    {message}
+                    {props.display === 'home' ? (
                         <Home 
                             user={props.user} 
                             updateUser={props.updateUser} 
@@ -74,27 +67,16 @@ const GiverContent = props => {
                             giverItems={giverItems}
                             setShowDetails={setShowDetails}
                             showDetails={showDetails}
-                        />  
-                        {/* }
-                    />  */}
-
-                    <Route path="/account" 
-                            render={() => 
-                                <Dashboard 
-                                    user={props.user} 
-                                    updateUser={props.updateUser} 
-                                    allPrograms={allPrograms} 
-                                    giverItems={giverItems}
-                            />
-                            }
-                    /> 
-{/* 
-                    <Route path={"/signup"} render={() => <Signup user={props.user} /> }/>
-                    <Route path={"/login/:id"} render={() => <Login user={props.user}/>}/>
-
-                     */}
-                    {/* <Route render={() => <Redirect to="/"/>}/> */}
-                </Switch>
+                        />)
+                        :  
+                        (<Dashboard 
+                            user={props.user} 
+                            updateUser={props.updateUser} 
+                            allPrograms={allPrograms} 
+                            giverItems={giverItems}
+                        />)
+                    }
+                       
                 </main>
             </div>
         )

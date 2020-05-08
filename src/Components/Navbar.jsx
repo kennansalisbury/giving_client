@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import {faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import{Divider, Drawer, AppBar, Grid, Toolbar, makeStyles, List, ListItem, ListItemText, IconButton, Menu, MenuItem} from '@material-ui/core'
 import logoIcon from '../static/img/logo_black_icon.png'
 
