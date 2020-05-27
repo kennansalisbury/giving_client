@@ -48,7 +48,7 @@ const Home = props => {
     
     if(showCreatePage) {
         return (
-            <CreateProgram />
+            <CreateProgram setShowCreatePage={setShowCreatePage} />
         )
     }
 
