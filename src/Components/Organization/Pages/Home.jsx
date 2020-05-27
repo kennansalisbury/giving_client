@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Redirect} from 'react-router-dom'
 
 //material ui elements
@@ -13,8 +13,11 @@ import { faPlusCircle, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 //component imports
 import ProgramModule from '../../ProgramModule'
+import CreateProgram from './CreateProgram'
 
 const Home = props => {
+
+    const [showCreatePage, setShowCreatePage] = useState(false)
 
     // const showDetailsPage = (e, currentProgram, totalGoal, totalPurchased, totalCurrentGiverPurch) => {
     //     e.preventDefault()
@@ -36,12 +39,19 @@ const Home = props => {
                     key={program.id}
                     program={program}
                     giverItems={props.giverItems}   
-                    // showDetailsPage={showDetailsPage}                        
+                    // showDetailsPage={showDetailsPage}  
+                    showCreatePage={showCreatePage}                      
                     user = {props.user}
                     updateUser = {props.updateUser}
                     />
     })
     
+    if(showCreatePage) {
+        return (
+            <CreateProgram />
+        )
+    }
+
     return (
         <Container>
             <Grid 
@@ -51,7 +61,7 @@ const Home = props => {
                 alignItems = "flex-start"
                 spacing = {4}>
                     <Grid item xs={12} sm={6}>
-                        <Card className="program-mod-link program-mod-card" onClick={e => console.log('Create new program') }>
+                        <Card className="program-mod-link program-mod-card" onClick={() => setShowCreatePage(true) }>
                             <CardContent align="center">
                                 <h2>Create New Program</h2>
                                 <FontAwesomeIcon 
