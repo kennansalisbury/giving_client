@@ -81,16 +81,6 @@ const GiverContent = props => {
             </div>
         )
 
-    
-   
-    // return (
-    //     <Switch>
-    //         <Route exact path={"/"} render={() => <Login updateUser={props.updateUser}/>}/>
-    //         <Route path={"/login/:id"} render={() => <Login updateUser={props.updateUser}/>}/>
-    //         <Route path={"/signup"} render={() => <Signup updateUser={props.updateUser} /> }/>
-    //     </Switch>
-    // )
-
 
 }
 
