@@ -1,10 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import jwtDecode from 'jwt-decode'
-import './App.css'
 import { BrowserRouter as Router, Route} from 'react-router-dom'
+
+//components
 import GiverContent from './Components/Giver/GiverContent'
+import OrgContent from './Components/Organization/OrgContent'
 import Login from './Components/Auth/Login'
 import Signup from './Components/Auth/Signup'
+
+//styles
+import './App.css'
 
 
 function App() {
@@ -63,10 +68,18 @@ function App() {
     return (
       <Router>
         <div>
+            {/* auth routes */}
             <Route path="/signup" render={() => <Signup user={user} updateUser={updateUser} /> }/>
             <Route path="/login" render={() => <Login user={user} updateUser={updateUser}/>}/>
-            <Route exact path="/" render={user ? () =>  <GiverContent user={user} updateUser={updateUser} display={'home'} /> : () => <Login user={user} updateUser={updateUser} /> } />
+            
+            <Route exact path="/" render={
+                user ? //if true, show user content; else show login
+                  (user.isDonor ? //if true, show giver content; else show org content                    
+                      () => <GiverContent user={user} updateUser={updateUser} display={'home'} /> 
+                      : () => <OrgContent user={user} updateUser={updateUser} />  ) 
+                  : () => <Login user={user} updateUser={updateUser} /> } />
             <Route path="/account" render={user ? () =>  <GiverContent user={user} updateUser={updateUser} display={'dashboard'} /> : () => <Login user={user} updateUser={updateUser} /> } />
+
         </div>
       </Router>
     )
