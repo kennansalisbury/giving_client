@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 
-import IndividualItemBar from '../Charts/IndividualItemBar'
+import IndividualItemBar from '../../Charts/IndividualItemBar'
 
 const Dashboard = props => {
 

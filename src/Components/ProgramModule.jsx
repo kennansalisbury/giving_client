@@ -54,8 +54,6 @@ const ProgramModule = props => {
         return totalCounter
     }
     
-
-
     useEffect(() => {
         let goal = findTotalGoal(props.program.programItems)
         let purchased = findTotalPurchased(props.program.programItems)

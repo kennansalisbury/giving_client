@@ -13,7 +13,7 @@ import NumberFormat from 'react-number-format'
 
 import ProgramItem from '../ProgramItem'
 import PurchaseConfirm from './PurchaseConfirm'
-import ProgramDonut from '../Charts/ProgramDonut'
+import ProgramDonut from '../../Charts/ProgramDonut'
 
 
 const Details = props => {

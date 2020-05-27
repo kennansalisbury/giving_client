@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import Input from '@material-ui/core/Input'
-import IndividualItemBar from './Charts/IndividualItemBar'
+import IndividualItemBar from '../Charts/IndividualItemBar'
 import { Grid } from '@material-ui/core'
 
 const ProgramItem = props => {

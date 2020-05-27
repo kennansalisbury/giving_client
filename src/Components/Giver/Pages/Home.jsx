@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Redirect} from 'react-router-dom'
-import ProgramModule from '../ProgramModule'
+import ProgramModule from '../../ProgramModule'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 
