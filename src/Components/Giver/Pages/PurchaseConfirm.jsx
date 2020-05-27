@@ -14,7 +14,7 @@ const PurchaseConfirm = props => {
 
     if(props.itemsPurchased) {
         let orderItems = props.itemsPurchased.map(item => {
-            return <p>{item.name}: {item.num_purchased} for ${item.dollars_spent.toFixed(2)}</p>
+            return <p key={item.name}>{item.name}: {item.num_purchased} for ${item.dollars_spent.toFixed(2)}</p>
         })
     
         return (
@@ -38,7 +38,7 @@ const PurchaseConfirm = props => {
                     </Grid>
                     <Grid item xs={12} sm={6}></Grid>
                     <br/>
-                    <Button variant="contained" onClick={e => props.setShowDetails(false)}>Return Home</Button>
+                    <Button variant="contained" onClick={(e => props.setShowDetails(false))}>Return Home</Button>
                 </Grid>
             </Container>
     )

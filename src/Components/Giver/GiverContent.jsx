@@ -15,11 +15,11 @@ const GiverContent = props => {
   
     useEffect(() => {
         fetchData()
-    }, [props.user])
+    }, [props.user, showDetails])
 
         //fetch data, and set state
         const fetchData = () => {
-            if(props.user) {
+            if(props.user && !showDetails) {
             let token = localStorage.getItem('userToken')
                 fetch(`${process.env.REACT_APP_SERVER_URL}/programs/${props.user.id}`,
                 {
