@@ -9,7 +9,7 @@ import Login from './Components/Auth/Login'
 import Signup from './Components/Auth/Signup'
 
 //styles
-import './App.css'
+import './App.scss'
 
 
 function App() {
