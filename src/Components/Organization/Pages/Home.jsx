@@ -51,7 +51,7 @@ const Home = props => {
                 alignItems = "flex-start"
                 spacing = {4}>
                     <Grid item xs={12} sm={6}>
-                        <Card className="program-mod-link" onClick={e => console.log('Create new program') }>
+                        <Card className="program-mod-link program-mod-card" onClick={e => console.log('Create new program') }>
                             <CardContent align="center">
                                 <h2>Create New Program</h2>
                                 <FontAwesomeIcon 

@@ -1,9 +1,43 @@
+$medium-screen: 991px;
+$small-screen: 767px;
+
+@mixin respond-to($media) {
+    @media only screen and (max-width: $media) { 
+        @content; 
+    }
+}
+
 .App {
   text-align: center;
 }
 
-.program-mod-link:hover {
-  cursor: pointer;
+.background-logo {
+  background: url('./static/img/logo.png')
+}
+
+.dashboard-card {
+  padding: 20px;
+}
+
+.link {
+  color: black;
+  & :hover {
+    color: black;
+    text-decoration: none;
+  }
+}
+
+.login {
+  &-background {
+  background-image: url('./static/img/background.jpg');
+  background-size: cover;
+  height: 150vh;
+  }
+  &-cards {
+    opacity: .8;
+    background: whitesmoke;
+    padding: 10px;
+  }
 }
 
 .number-select {
@@ -12,31 +46,16 @@
   margin-right: 5px;
 }
 
-.login-background {
-  background-image: url('./static/img/background.jpg');
-  background-size: cover;
-  height: 150vh;
-}
-
-.login-cards {
-  opacity: .8;
-  background: whitesmoke;
-  padding: 10px;
-}
-
-.link {
-  color: black;
-}
-
-.link:hover {
-  color: black;
-  text-decoration: none;
-}
-
-.dashboard-card {
-  padding: 20px;
-}
-
-.background-logo {
-  background: url('./static/img/logo.png')
+.program-mod {
+  &-link {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &-card {
+    min-height: 50vh;
+    @include respond-to($small-screen) {
+      min-height: 10vh;
+    }
+  }
 }
